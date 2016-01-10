@@ -1,0 +1,171 @@
+en:
+  lita:
+    adapters:
+      shell:
+        startup_message: Type "exit" or "quit" to end the session.
+    auth:
+      class_method_deprecated: >-
+        Lita::Authorization.%{method} will be removed in Lita 5.0. Use the version accessed via
+        Lita::Robot#auth instead.
+    core:
+      register_adapter:
+        block_or_class_required: Lita.register_adapter requires a class in its two argument form.
+      register_handler:
+        block_or_class_required: Lita.register_handler requires a class in its single argument form.
+    handlers:
+      authorization:
+        help:
+          add_key: auth add USER GROUP
+          add_value: Add USER to authorization group GROUP. Requires admin privileges.
+          remove_key: auth remove USER GROUP
+          remove_value: Remove USER from authorization group GROUP. Requires admin privileges.
+          list_key: "auth list [GROUP]"
+          list_value: >-
+            List authorization groups and the users in them. If GROUP is supplied,
+            only lists that group.
+        user_added: "%{user} was added to %{group}."
+        user_already_in: "%{user} was already in %{group}."
+        user_removed: "%{user} was removed from %{group}."
+        user_not_in: "%{user} was not in %{group}."
+        empty_state: There are no authorization groups yet.
+        empty_state_group: "There is no authorization group named %{group}."
+        format: "Format"
+        admin_management: Administrators can only be managed via Lita config.
+        no_user_found: 'No user was found with the identifier "%{identifier}".'
+      help:
+        help:
+          help_value: Lists help information for terms and command the robot will respond to.
+          help_command_key: help COMMAND
+          help_command_value: Lists help information for terms or commands that begin with COMMAND.
+      info:
+        help:
+          info_value: Replies with the current version of Lita.
+      room:
+        help:
+          join_key: join ROOM_ID
+          join_value: Makes the robot join the room with room ID ROOM_ID.
+          part_key: part ROOM_ID
+          part_value: Makes the robot part from the room with room ID ROOM_ID.
+      users:
+        find_empty_state: No matching users found.
+        help:
+          find_key: users find SEARCH_TERM
+          find_value: Find a Lita user by ID, name, or mention name.
+    adapter:
+      method_not_implemented: "This adapter has not implemented #%{method}."
+      missing_configs: "The following keys are required on config.adapter: %{configs}"
+      require_config_deprecated: >-
+        Lita::Adapter.require_config is deprecated and will be removed in Lita 5.0.
+        Use Lita::Adapter.config instead.
+      required_configs_deprecated: >-
+        Lita::Adapter.required_configs is deprecated and will be removed in Lita 5.0.
+        Use Lita::Adapter.configuration_builder instead.
+    cli:
+      no_gemfile_warning: >-
+        The default command "start" must be run inside a Lita project. Try running `lita new` to
+        generate a new Lita project or `lita help` to see all commands.
+      travis_question: Do you want to test your plugin on Travis CI? ("yes" or "no", default is "no")
+      coveralls_question: >-
+        Do you want to generate code coverage information with SimpleCov and Coveralls.io?
+        ("yes" or "no", default is "no")
+      daemon_deprecated: >-
+        Lita's built-in daemonization is deprecated without replacement and will be removed in
+        Lita 5.0. Use your operating system's process manager instead.
+      license_notice: >-
+        If you plan to release this plugin as open source software, consider adding a LICENSE file
+        to the root of the repository.
+
+        Common open source software licenses can be found at http://choosealicense.com/.
+      badges_message: >-
+        If your plugin's Git repository will be hosted on GitHub, build status and code coverage
+        badges can be automatically added to your README.
+      badges_question: >-
+        Would you like to add these badges? ("yes" or "no", default is "no")
+      github_user_question: What is your GitHub username?
+      badges_reminder: >-
+        Remember, for badges to be displayed in your plugin's README, you must host your project on
+        GitHub. Additionally, you will need to configure the project on Travis CI and Coveralls.io.
+    config:
+      adapter_deprecated:
+        config.adapter is deprecated and will be removed in Lita 5.0. Use config.adapters instead.
+      exception: |
+        Lita configuration file could not be processed. The exception was:
+        %{message}
+        Full backtrace:
+        %{backtrace}
+      handler_default_config_deprecated: >-
+        Lita::Handler.default_config is deprecated and will be removed in Lita 5.0.
+        Use Lita::Handler.config instead. The method was found defined in the %{name} handler.
+      redis_struct_access_deprecated: >-
+        Struct-style access of config.redis is deprecated and will be removed in Lita 5.0.
+        config.redis is now a hash.
+      missing_required_adapter_attribute: >-
+        Configuration attribute "%{attribute}" is required for "%{adapter}" adapter.
+      missing_required_handler_attribute: >-
+        Configuration attribute "%{attribute}" is required for "%{handler}" handler.
+      type_error: >-
+        Configuration type error: "%{attribute}" must be one of: %{types}.
+      validation_error: >-
+        Validation error on attribute "%{attribute}": %{message}
+    daemon:
+      pid_exists: >-
+        PID file exists at %{path}. Lita may already be running. Kill the existing process or
+        remove the PID file and then start Lita.
+      kill_failure: "Failed to kill existing Lita process %{pid}."
+    handler:
+      dispatch: "Dispatching message to %{handler}#%{method}."
+      exception: |
+        %{handler} crashed. The exception was:
+        %{message}
+        Full backtrace:
+        %{backtrace}
+    http:
+      exception: |
+        Lita's built-in web server could not be started. The exception was:
+        %{message}
+        Full backtrace:
+        %{backtrace}
+    plugin:
+      name_required: Plugins that are anonymous classes must set a namespace or define self.name.
+    redis:
+      exception: |
+        Lita could not connect to Redis. The exception was:
+        %{message}
+        Full backtrace:
+        %{backtrace}
+      test_mode_exception: |
+        Lita could not connect to Redis. The exception was:
+        %{message}
+    robot:
+      unknown_adapter: "Unknown adapter: :%{adapter}."
+    rspec:
+      full_suite_required: Lita::RSpec requires both RSpec::Mocks and RSpec::Expectations.
+      version_3_required: RSpec::Core 3 or greater is required to use Lita::RSpec.
+      rack_test_required: Rack::Test is required to use the `http` method of Lita::RSpec.
+      lita_3_compatibility_mode: >-
+        WARNING: Lita 3 compatibility mode is currently enabled. It is recommended that you disable
+        it by adding the following code to spec/spec_helper.rb:
+
+            require "lita/rspec"
+            Lita.version_3_compatibility_mode = false
+
+        This will ensure that your test suite works with all the changes introduced in Lita 4. The
+        compatibility mode will be removed in Lita 5.
+      route_failure: |-
+        Expected message "%{message}" to route to :%{route}, but didn't.
+      negative_route_failure: |-
+        Expected message "%{message}" not to route to :%{route}, but did.
+      http_route_failure: |-
+        Expected request "%{method} %{path}" to route to :%{route}, but didn't.
+      negative_http_route_failure: |-
+        Expected request "%{method} %{path}" not to route to :%{route}, but did.
+      event_subscription_failure: |-
+        Expected triggering event "%{event}" to invoke :%{route}, but didn't.
+      negative_event_subscription_failure: |-
+        Expected triggering event "%{event}" not to invoke :%{route}, but did.
+      matcher_deprecated: >-
+        `%{old_method}` is deprecated and will be removed in Lita 5.0. Use `%{new_method}` instead.
+    source:
+      user_or_room_required: Either a user or a room is required.
+    template:
+      missing_template: Missing template file at %{path}.
