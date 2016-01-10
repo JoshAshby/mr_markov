@@ -7,7 +7,12 @@ Gem::Specification.new do |spec|
   spec.summary       = ""
   spec.homepage      = ""
   spec.license       = ""
-  spec.metadata      = { "lita_plugin_type" => "handler" }
+
+  spec.required_ruby_version = '>= 2.3.0'
+
+  if spec.respond_to? :metadata
+    spec.metadata      = { "lita_plugin_type" => "handler" }
+  end
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
