@@ -1,12 +1,29 @@
 module Lita
   module Handlers
-    class MarkovReply < Handler
-      Lita.register_handler(self)
+    class MarkovReply
+      extend Handler::ChatRouter
+      extend Handler::HTTPRouter
 
-      route(/^say, MrMarkov,\s+(.+)/, :say)
+      Lita.register_handler self
 
-      def say robot
+      route(/^say, MrMarkov,\s+(.+)/, :chat_say)
+
+      def chat_say robot
         robot.reply robot.matches.to_s
+      end
+
+      http.get '/', :http_root
+
+      def http_root request, response
+        response.headers["Content-Type"] = "application/json"
+
+        json = MultiJson.dump(
+          lita_version: Lita::VERSION,
+          robot_name: robot.name,
+          robacarp: "HI ROB!!!!"
+        )
+
+        response.write json
       end
     end
   end
