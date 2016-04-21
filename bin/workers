@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require_relative '../mr_markov'
+require 'sneakers/runner'
+
+require 'telegram/bot'
+require 'excon'
+
+Telegram::Bot.configure do |config|
+  config.adapter = :excon
+end
+
+workers = []
+
+[ AshFrame::Worker, AshFrame::PubSub::Subscriber ].each do |klass|
+  workers << ObjectSpace.each_object(klass.singleton_class).select do |const|
+    next false unless const.respond_to? :ancestors
+    next false unless const.ancestors.include? Sneakers::Worker
+    next false unless const.queue_name
+    true
+  end
+end
+
+workers.flatten!
+
+puts "Starting up sneakers workers: #{ workers }"
+
+r = Sneakers::Runner.new workers
+r.run

@@ -1,0 +1,16 @@
+defaults: &defaults
+  amqp: 'amqp://guest:guest@localhost:5672'
+
+development:
+  <<: *defaults
+  threads: 1
+  workers: 1
+  share_threads: true
+  timeout_job_after: 0
+
+test:
+  <<: *defaults
+  amqp: "amqp://guest:guest@<%= ENV['RABBITMQ_NODENAME'] %>:5672"
+
+production:
+  <<: *defaults

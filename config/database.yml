@@ -1,0 +1,21 @@
+default: &default
+  pool: 5
+  timeout: 5000
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  username: postgres
+
+development:
+  <<: *default
+  database: mr_markov_development
+
+test:
+  <<: *default
+  host: <%= ENV['POSTGRES_PORT_5432_TCP_ADDR'] %>
+  port: <%= ENV['POSTGRES_PORT_5432_TCP_PORT'] %>
+  database: mr_markov_test
+
+production:
+  <<: *default
+  database: mr_markov_production
