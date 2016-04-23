@@ -11,7 +11,7 @@ class ApplicationController < BaseController
   end
 
   get '/fetch' do
-    res = JSON.dumps @messages
+    res = JSON.dump @messages
 
     @messages = []
 
