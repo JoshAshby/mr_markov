@@ -1,6 +1,6 @@
 require 'sinatra/base'
-require 'sinatra/content_for'
-require 'sinatra/flash'
+# require 'sinatra/content_for'
+# require 'sinatra/flash'
 
 # require 'haml'
 # require 'tilt/haml'
@@ -38,6 +38,6 @@ class BaseController < Sinatra::Base
     env["rack.errors"] = error_logger
   end
 
-  helpers Sinatra::ContentFor
-  register Sinatra::Flash
+  # helpers Sinatra::ContentFor
+  # register Sinatra::Flash
 end

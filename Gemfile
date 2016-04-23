@@ -29,7 +29,7 @@ gem 'excon'
 # gem 'stopwords-filter'
 
 # Datastore gems
-gem 'connection_pool'
+# gem 'connection_pool'
 
 ## Postgres, ORM
 # gem 'pg'
@@ -60,8 +60,8 @@ gem 'connection_pool'
 
 # Frontend
 gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'sinatra-flash'
+# gem 'sinatra-contrib'
+# gem 'sinatra-flash'
 # gem 'haml'
 # gem 'rabl'
 
