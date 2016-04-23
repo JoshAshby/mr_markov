@@ -10,6 +10,6 @@ class ApplicationController < BaseController
   end
 
   post "/hook_#{ ENV['TELEGRAM_TOKEN'] }" do
-    debugger
+    MrMarkov.logger.info params
   end
 end
