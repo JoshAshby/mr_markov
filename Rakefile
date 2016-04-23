@@ -12,6 +12,24 @@ task :environment do
   require_relative './mr_markov'
 end
 
+namespace :mr_markov do
+  desc "Installs the telegram webhook"
+  task install: :environment do
+    bot = Telegram::Bot::Client.new ENV['TELEGRAM_TOKEN'], logger: MrMarkov.logger
+
+    bot.setWebhook url: "https://mrmarkov.themoon.isin.space/hook_#{ ENV['TELEGRAM_TOKEN'] }"
+    puts "Webhook installed!"
+  end
+
+  desc "Uninstalls the telegram webhook"
+  task uninstall: :environment do
+    bot = Telegram::Bot::Client.new ENV['TELEGRAM_TOKEN'], logger: MrMarkov.logger
+
+    bot.setWebhook url: ""
+    puts "Webhook uninstalled!"
+  end
+end
+
 namespace :redis do
   desc "Flushes the current redis instance, to clean away all keys"
   task flush: :environment do
