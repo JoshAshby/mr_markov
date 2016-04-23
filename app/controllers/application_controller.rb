@@ -10,7 +10,10 @@ class ApplicationController < BaseController
   end
 
   post "/hook_#{ ENV['TELEGRAM_TOKEN'] }" do
-    puts params
+    puts params.to_h
+
     bot.api.send_message chat_id: 204348342, text: "Hello"
+
+    status 200
   end
 end
