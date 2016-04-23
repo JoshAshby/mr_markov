@@ -1,5 +1,5 @@
 class RoutingBlock < AshFrame::Block
-  require :bot, :message
+  require :message
 
   def logic
     return if handle_command
@@ -17,14 +17,14 @@ class RoutingBlock < AshFrame::Block
     args = message.text[length+1..-1]
 
     # TODO: Command Things
-    bot.api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.last_name }"
+    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.last_name }"
 
     true
   end
 
   def handle_message
     # TODO: Message Things
-    bot.api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.first_name }"
+    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.first_name }"
 
     true
   end
