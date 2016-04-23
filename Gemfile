@@ -4,8 +4,8 @@ ruby '2.3.0'
 gem 'rake'
 gem 'require_all'
 
-gem 'ash_frame', path: '../ash_frame' # Local
-# gem 'ash_frame', git: 'http://code.isin.space/JoshAshby/AshFrame.git' # Git
+# gem 'ash_frame', path: '../ash_frame' # Local
+gem 'ash_frame', git: 'http://code.isin.space/JoshAshby/AshFrame.git' # Git
 
 # The sadness, but lots of useful helpers
 gem 'activesupport', '~> 4', require: 'active_support/all'
