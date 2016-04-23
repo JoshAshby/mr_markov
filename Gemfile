@@ -32,15 +32,15 @@ gem 'excon'
 gem 'connection_pool'
 
 ## Postgres, ORM
-gem 'pg'
-gem 'sequel'
-gem 'sequel_pg', require: 'sequel'
-gem 'globalid'
+# gem 'pg'
+# gem 'sequel'
+# gem 'sequel_pg', require: 'sequel'
+# gem 'globalid'
 
 ## Redis Utils
-gem 'redis'
-gem 'hiredis'
-gem 'redis-namespace'
+# gem 'redis'
+# gem 'hiredis'
+# gem 'redis-namespace'
 # gem 'redlock'
 
 ## Elasticsearch
@@ -52,14 +52,16 @@ gem 'redis-namespace'
 
 # Communication
 ## RabbitMQ
-gem 'bunny'
+# gem 'bunny'
 
 # Async Workers
 # gem 'sidekiq'  # Redis Backed
-gem 'sneakers' # RabbitMQ Backed
+# gem 'sneakers' # RabbitMQ Backed
 
 # Frontend
-# gem 'sinatra'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'sinatra-flash'
 # gem 'haml'
 # gem 'rabl'
 

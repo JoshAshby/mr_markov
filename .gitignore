@@ -8,3 +8,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+/logs/
+/.byebug_history

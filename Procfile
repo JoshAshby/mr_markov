@@ -1,2 +1,1 @@
-workers: bundle exec ./bin/workers
-telegram: bundle exec ./bin/telegram
+web: bundle exec rackup -p 5000

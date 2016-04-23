@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require_relative '../mr_markov'
+
+thread_group = ThreadGroup.new
+
+telegram_client_pool = ConnectionPool.new size: 50 do
+  config = AshFrame.config_for(:telegram).symbolize_keys
+  Telegram::Bot::Client.new config.delete(:token), logger: MrMarkov.logger, **config
+end
+
+telegram_client_pool.with do |telegram_client|
+  telegram_client.listen do |message|
+    thread = Thread.new do
+      telegram_client_pool.with do |bot|
+        RoutingBlock[ bot: bot, message: message ]
+      end
+    end
+
+    thread_group.add thread
+  end
+end
