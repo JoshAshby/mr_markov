@@ -1,33 +1,38 @@
-# require 'pg'
-# require 'sequel'
+require 'pg'
+require 'sequel'
 
-# # Setup our SQL database for things
-# DB = Sequel.connect(
-#   **AshFrame.config_for(:database).symbolize_keys,
-#   loggers: [ Logger.new(AshFrame.root.join('logs', 'sequel.log')) ]
-# )
+config = AshFrame.config_for(:database).symbolize_keys
+database_args = [
+  config.delete(:url),
+  {
+    loggers: [ Logger.new(AshFrame.root.join('logs', 'sequel.log')) ]
+  }.merge(config)
+].compact
 
-# DB.extension :pagination
+# Setup our SQL database for things
+DB = Sequel.connect(*database_args)
 
-# Sequel::Model.db = DB
+DB.extension :pagination
 
-# Sequel.default_timezone = :utc
+Sequel::Model.db = DB
 
-# DB.extension :pg_array, :pg_json, :pg_enum
-# DB.extension :pagination
+Sequel.default_timezone = :utc
 
-# # Sequel::Model.plugin :active_model
-# Sequel::Model.plugin :update_or_create
+DB.extension :pg_array, :pg_json, :pg_enum
+DB.extension :pagination
 
-# Sequel::Model.plugin :dirty
-# Sequel::Model.plugin :auto_validations
-# Sequel::Model.plugin :boolean_readers
-# Sequel::Model.plugin :timestamps, update_on_create: true
+# Sequel::Model.plugin :active_model
+Sequel::Model.plugin :update_or_create
 
-# Sequel.extension :pg_json_ops, :pg_array_ops
+Sequel::Model.plugin :dirty
+Sequel::Model.plugin :auto_validations
+Sequel::Model.plugin :boolean_readers
+Sequel::Model.plugin :timestamps, update_on_create: true
 
-# GlobalID::Locator.use :mrmarkov do |gid|
-#   Object.const_get(gid.model_name).find(id: gid.model_id)
-# end
+Sequel.extension :pg_json_ops, :pg_array_ops
 
-# GlobalID.app = :mrmarkov
+GlobalID::Locator.use :mrmarkov do |gid|
+  Object.const_get(gid.model_name).find(id: gid.model_id)
+end
+
+GlobalID.app = :mrmarkov

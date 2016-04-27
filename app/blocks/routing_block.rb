@@ -1,9 +1,20 @@
 class RoutingBlock < AshFrame::Block
   require :message
+  attr_accessor :session
 
   def logic
+    build_session
+
     return if handle_command
     handle_message
+  end
+
+  def build_session
+    @session = MrMarkov.cache.fetch [ message.from.id, 'session' ] do
+      {
+        state: nil
+      }
+    end
   end
 
   def handle_command

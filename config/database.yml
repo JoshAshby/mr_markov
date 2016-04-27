@@ -17,5 +17,4 @@ test:
   database: mr_markov_test
 
 production:
-  <<: *default
-  database: mr_markov_production
+  url: <%= ENV['DATABASE_URL'] %>

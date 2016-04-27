@@ -32,10 +32,13 @@ gem 'excon'
 # gem 'connection_pool'
 
 ## Postgres, ORM
-# gem 'pg'
-# gem 'sequel'
-# gem 'sequel_pg', require: 'sequel'
-# gem 'globalid'
+gem 'pg'
+gem 'sequel'
+gem 'sequel_pg', require: 'sequel'
+gem 'globalid'
+
+gem 'bcrypt'
+gem 'sequel_secure_password'
 
 ## Redis Utils
 # gem 'redis'
