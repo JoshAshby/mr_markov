@@ -1,0 +1,7 @@
+- key ||= :flash
+- id = (key == :flash ? "flash" : "flash-#{key}")
+- unless flash(key).empty?
+  .container{ id: id }
+    - flash(key).collect do |type, msg|
+      .notification.flash{ class: [ type, "is-#{ type }" ] }
+        = msg

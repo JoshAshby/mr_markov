@@ -2,14 +2,6 @@
 
 require_relative '../mr_markov'
 
-thread_group = ThreadGroup.new
-
-telegram_client = Telegram::Bot::Client.new ENV['TELEGRAM_TOKEN'], logger: MrMarkov.logger, timeout: 60
-
-telegram_client.listen do |message|
-  thread = Thread.new do
-    RoutingBlock[ message: message ]
-  end
-
-  thread_group.add thread
+Telegram::Bot::Client.new(ENV['TELEGRAM_TOKEN'], logger: MrMarkov.logger).listen do |message|
+  RoutingBlock[ message: message ]
 end

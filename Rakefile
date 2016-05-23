@@ -53,14 +53,13 @@ namespace :db do
     puts "Loading seed data"
 
     require_relative './db/seeds'
-    Seeds.load_seeds
   end
 
   desc "Reset, migrate and reseed seed"
   task reset: :environment do
     puts "Droping existing tables"
-    DB.run 'drop schema if exists public cascade'
-    DB.run 'create schema public;'
+    DB.run 'DROP SCHEMA IF EXISTS public CASCADE'
+    DB.run 'CREATE SCHEMA IF NOT EXISTS public;'
     Rake::Task['db:migrate'].execute
     Rake::Task['db:seed'].execute
   end
@@ -105,41 +104,6 @@ namespace :test do
   task :nocoverage do
     ENV['COVERAGE'] = 'false'
     Rake::Task['test'].execute
-  end
-
-  desc "Generates missing test files"
-  task generate: :environment do
-    template = File.read ETL.root.join('templates', 'test.rb.erb')
-
-    Dir[ 'lib/**/*.rb', 'app/**/*.rb' ].map do |f|
-      filename = Pathname.new('test') + f.gsub('.rb', '_test.rb')
-      unless File.exist? filename
-        puts "Creating #{ filename }"
-
-        template_context = Class.new do
-          def initialize f
-            @f = f
-          end
-
-          def class_name
-            @f.gsub('.rb', '').gsub('lib/', '').camelcase.gsub('::', '')
-          end
-
-          def relative_count
-            @f.count('/')
-          end
-
-          def get_binding
-            binding
-          end
-        end.new(f).get_binding
-
-        test_output = ERB.new(template, nil, '>').result template_context
-
-        filename.parent.mkpath
-        File.write filename, test_output
-      end
-    end
   end
 end
 

@@ -25,7 +25,7 @@ DB.extension :pagination
 Sequel::Model.plugin :update_or_create
 
 Sequel::Model.plugin :dirty
-Sequel::Model.plugin :auto_validations
+# Sequel::Model.plugin :auto_validations
 Sequel::Model.plugin :boolean_readers
 Sequel::Model.plugin :timestamps, update_on_create: true
 

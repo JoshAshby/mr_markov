@@ -1,16 +1,16 @@
-groups = {
-  'admin' => {
-    name: 'admin'
-  }
-}.inject({}) do |memo, (key, data)|
-  memo[key] = Group.create(**data)
-  memo
-end
+# groups = {
+#   'admin' => {
+#     name: 'admin'
+#   }
+# }.inject({}) do |memo, (key, data)|
+#   memo[key] = Group.create(**data)
+#   memo
+# end
 
 users = {
   'ashby' => {
     username: 'ashby',
-    password: 'test',
+    password: ENV['ASHBY_USER_PASS'] || 'test',
     preferences: {
       email: 'joshashby@joshashby.com'
     },
@@ -28,15 +28,15 @@ users = {
   #   end
   # end
 
-  if data.has_key? :groups
-    data[:groups].each do |g|
-      next unless groups.has_key? g
-      groups[g].add_user user
-    end
-  end
+  # if data.has_key? :groups
+  #   data[:groups].each do |g|
+  #     next unless groups.has_key? g
+  #     groups[g].add_user user
+  #   end
+  # end
 
   memo[key] = user
   memo
 end
 
-groups.values.each(&:save)
+# groups.values.each(&:save)

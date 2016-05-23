@@ -1,14 +1,13 @@
 Sequel.migration do
   change do
-    create_table :authorizations do
+    create_table :processor_stacks do
       primary_key :id
 
-      String :provider
-      String :uid
-
       foreign_key :user_id, :users, index: true
+      String :name
 
-      column :info, :jsonb
+      column :options, :jsonb
+      column :state, :jsonb
 
       DateTime :created_at
       DateTime :updated_at

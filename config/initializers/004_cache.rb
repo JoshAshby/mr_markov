@@ -1,5 +1,5 @@
 class MrMarkov
   def self.cache
-    @cache ||= ActiveSupport::Cache::FileStore.new AshFrame.root.join('cache/'), compress: true
+    @cache ||= ActiveSupport::Cache.lookup_store :redis_store
   end
 end

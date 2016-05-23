@@ -11,16 +11,17 @@ gem 'ash_frame', git: 'http://code.isin.space/JoshAshby/AshFrame.git' # Git
 gem 'activesupport', '~> 4', require: 'active_support/all'
 
 # Request making
-# gem 'faraday'
-# gem 'faraday_middleware'
+gem 'faraday'
+gem 'faraday_middleware'
 # gem 'typhoeus'
 gem 'excon'
 # gem 'robotstxt-parser', require: 'robotstxt'
 
 # Parsing/HTML handling
-# gem 'nokogiri'
+gem 'nokogiri'
 # gem 'loofah'
 # gem 'ruby-readability'
+gem 'jsonpath'
 
 # Text analysis and ML
 # gem 'words_counted'
@@ -41,10 +42,13 @@ gem 'bcrypt'
 gem 'sequel_secure_password'
 
 ## Redis Utils
-# gem 'redis'
-# gem 'hiredis'
+gem 'redis'
+gem 'hiredis'
 # gem 'redis-namespace'
 # gem 'redlock'
+
+gem 'redis-activesupport'
+gem 'redis-rack'
 
 ## Elasticsearch
 # gem 'elasticsearch'
@@ -63,10 +67,13 @@ gem 'sequel_secure_password'
 
 # Frontend
 gem 'sinatra'
-# gem 'sinatra-contrib'
-# gem 'sinatra-flash'
-# gem 'haml'
-# gem 'rabl'
+gem 'sinatra-contrib'
+gem 'sinatra-flash'
+gem 'haml'
+gem 'rabl'
+gem 'liquid'
+
+gem 'thin'
 
 # Chat systems
 gem 'telegram-bot-ruby'
