@@ -40,6 +40,6 @@ end
   stack = Stack.create user: users['ashby'], name: name
 
   frames.each do |frame_options|
-    Frame.create user: users['ashby'], stack: stack, **frame_options
+    Frame.create stack: stack, **frame_options
   end
 end

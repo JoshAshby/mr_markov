@@ -1,11 +1,10 @@
-class Event < Sequel::Model
+class Result < Sequel::Model
   plugin :validation_helpers
 
-  many_to_one :user
-  many_to_one :stack
   many_to_one :frame
 
   def validate
     super
+    validates_presence [ :frame_id ]
   end
 end
