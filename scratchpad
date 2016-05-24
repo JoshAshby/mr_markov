@@ -1,0 +1,25 @@
+processor_stack = [
+  {
+    processor: 'website',
+    options: {
+      url: 'http://xkcd.com'
+    }
+  },
+  {
+    processor: 'extract',
+    options: {
+      type: 'xpath',
+      extract: {
+        alt: '//*[@id="comic"]/img/@alt',
+        image: '//*[@id="comic"]/img/@src'
+      },
+      from: "{{ body }}"
+    }
+  }
+].map do |f|
+  f.deep_stringify_keys
+end
+
+processor_stack.inject({}) do |memo, frame|
+  Processors.get(frame['processor']).receive frame['options'], memo
+end

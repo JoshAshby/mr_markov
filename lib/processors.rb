@@ -1,41 +1,3 @@
-class OptionsDSL
-  Option = Struct.new :required, :default, :type
-
-  attr_reader :options
-
-  def self.call *required, **optional, &block
-    inst = self.new
-
-    inst.required(*required)
-    inst.optional(**optional)
-    inst.instance_exec(&block)
-
-    inst.options
-  end
-
-  def initialize
-    @options = {}
-  end
-
-  def required *args
-    res = args.inject({}) do |memo, arg|
-      memo[arg] = Option.new true
-      memo
-    end
-
-    @options.deep_merge! res
-  end
-
-  def optional **opts
-    res = opts.inject({}) do |memo, (key, value)|
-      memo[key] = Option.new false, value, nil
-      memo
-    end
-
-    @options.deep_merge! res
-  end
-end
-
 # Container for basic processor related functionality, along with acting as a
 # registry of all processors by a nice easy to use name.
 class Processors
@@ -57,25 +19,19 @@ class Processors
   # Base setup for processors and the DSL definitions for a processors settings
   class Base
     class << self
+      attr_reader :registered_as, :options
+
       def register_as name
         Processors.register name, as: self
         @registered_as = name
-      end
-
-      def registered_as
-        @registered_as
       end
 
       def setup_options *required, **optional, &block
         @options = OptionsDSL.call(*required, **optional, &block)
       end
 
-      def options
-        @options
-      end
-
       def receive options, event
-        new(options, event).handle || {}
+        new(options, event).handle
       end
     end
 
@@ -83,22 +39,51 @@ class Processors
 
     def initialize raw_options, event, logger: nil
       @logger = logger || Logger.new(STDOUT) # TODO: Fix
-      @liquid_context = Liquid::Context.new event
+      @liquid_context = Liquid::Context.new event.deep_stringify_keys
 
       @options = {}
 
       self.class.options.each do |name, settings|
-        value = raw_options[name] || settings[:default]
-
-        if value.kind_of? String
-          value = Liquid::Template.parse(value).render!(@liquid_context)
+        if  settings.required && ! raw_options.has_key?(name.to_s)
+          fail "Invalid options: #{ name } is required but missing"
         end
+
+        value = raw_options[name.to_s] || settings.default
+        value = Liquid::Template.parse(value).render!(@liquid_context) if value.kind_of? String
 
         @options[name] = value
       end
 
       @event = event
     end
+  end
+
+  protected
+
+  class OptionsDSL
+    Option = Struct.new :required, :default, :type
+
+    attr_reader :options
+
+    def self.call *required, **optional, &block
+      inst = self.new
+
+      inst.required(*required, **optional)
+      inst.instance_exec(&block)
+
+      inst.options
+    end
+
+    def initialize
+      @options = {}
+    end
+
+    def required *args, **opts
+      args.each{ |arg| @options[arg] = Option.new true }
+      opts.each{ |key, value| @options[key] = Option.new false, value, nil }
+    end
+
+    alias_method :optional, :required
   end
 end
 
@@ -116,7 +101,6 @@ class WebsiteProcessor < Processors::Base
   end
 
   def handle
-    debugger
     response = faraday.send options[:method].to_sym, options[:url]
 
     status = response.status
@@ -163,10 +147,10 @@ class ExtractProcessor < Processors::Base
     when :json
       options[:extract].each do |key, path|
         path = JsonPath.new path
-        extracted_parts[key] = path.on event['body']
+        extracted_parts[key] = path.on options[:from]
       end
     else # Assume its an HTML document otherwise
-      body_giri = Nokogiri::HTML event['body']
+      body_giri = Nokogiri::HTML options[:from]
 
       options[:extract].each do |key, path|
         nodes = body_giri.xpath path
@@ -188,6 +172,8 @@ class ExtractProcessor < Processors::Base
           end
           value.to_s
         end
+
+        result = result.first if result.kind_of?(Array) && result.length == 1
 
         extracted_parts[key] = result
       end
