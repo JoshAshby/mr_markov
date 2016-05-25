@@ -3,38 +3,33 @@ class ReceiverBlock < AshFrame::Block
 
   def logic
     stack.frames.inject(event) do |memo, frame|
-      log_file           = StringIO.new
-      logger             = Logger.new log_file
+      log_file             = StringIO.new
+      logger               = Logger.new log_file
 
-      frame_processor    = Processors.get frame.processor
+      frame_processor      = Processors.get frame.processor
       interpolated_options = interpolate frame.options, using: memo
 
-      processor = nil
-      result    = nil
-      cancel    = false
+      processor            = frame_processor.new(options: interpolated_options, event: memo, state: frame.state.to_h, logger: logger)
 
       begin
-        processor = frame_processor.new options: interpolated_options, state: frame.state.to_h, logger: logger
-        result    = processor.handle
-        cancel    = processor.cancel
+        processor.handle
       rescue => e
         logger.error e
-        result = {}
-        cancel = true
       end
 
-      log_file.rewind
-
+      fail "State is not a hash like object!" unless processor.state.respond_to? :to_h
       frame.update state: processor.state.to_h
 
-      Result.create frame: frame, result: result
-      Log.create    frame: frame, log: log_file.read
+      fail "Result is not a hash like object!" unless processor.result.respond_to? :to_h
+      Result.create frame: frame, result: processor.result.to_h
 
+      log_file.rewind
+      Log.create frame: frame, log: log_file.read
       log_file.close
 
-      return result if cancel
+      return processor.result unless processor.propagate
 
-      result
+      processor.result
     end
   end
 

@@ -9,6 +9,8 @@ class RoutingBlock < AshFrame::Block
     handle_message
   end
 
+  protected
+
   def build_session
     @session = MrMarkov.cache.fetch [ message.from.id, 'session' ] do
       {

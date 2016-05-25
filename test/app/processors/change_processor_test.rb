@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class WebsiteProcessorTest < MiniTest::Test
+class ChangeProcessorTest < MiniTest::Test
   def test_handle
     assert true
   end

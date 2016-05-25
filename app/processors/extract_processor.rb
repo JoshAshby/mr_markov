@@ -18,7 +18,7 @@ class ExtractProcessor < Processors::Base
       xml
     end
 
-    @extracted_parts
+    propagate! @extracted_parts
   end
 
   protected

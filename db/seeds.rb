@@ -34,6 +34,12 @@ end
         },
         from: "{{ body }}"
       }
+    },
+    {
+      processor: 'change',
+      options: {
+        from: "{{ image }}"
+      }
     }
   ]
 }.each do |name, frames|

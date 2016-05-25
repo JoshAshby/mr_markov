@@ -32,15 +32,16 @@ class Processors
       end
     end
 
-    attr_reader :logger, :options, :state, :cancel
+    attr_reader :logger, :options, :event, :state, :propagate, :result
 
-    def initialize(options:, state: {}, logger: nil)
-      @logger  = logger || Logger.new(STDOUT)
+    def initialize(options:, event:, state: {}, logger: nil)
+      @logger    = logger || Logger.new(STDOUT)
 
-      @cancel  = false
-
-      @state   = state
-      @options = {}
+      @propagate = true
+      @state     = state
+      @event     = event
+      @result    = {}
+      @options   = {}
 
       self.class.options.each do |name, settings|
         if  settings.required && ! options.has_key?(name.to_s)
@@ -53,9 +54,14 @@ class Processors
       end
     end
 
-    def cancel!(**opts)
-      @cancel = true
-      {}.merge(**opts)
+    def cancel! data={}, **opts
+      @propagate = false
+      @result    = data.merge opts
+    end
+
+    def propagate! data={}, **opts
+      @propagate = true
+      @result    = data.merge opts
     end
   end
 

@@ -20,11 +20,11 @@ class WebsiteProcessor < Processors::Base
 
     body = response.body
 
-    {
+    propagate!({
       status: response.status,
       headers: response.headers,
       body: body
-    }
+    })
   end
 
   protected
