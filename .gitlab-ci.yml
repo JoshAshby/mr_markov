@@ -1,12 +1,12 @@
-image: ruby:2.3.0
+image: ruby:2.3.1
 
 services:
   - redis:latest
-  - postgres:9.4
+  - postgres:latest
 
 cache:
   paths:
-    - ./.gems/
+    - .gems/
 
 variables:
   POSTGRES_DB: mr_markov_test

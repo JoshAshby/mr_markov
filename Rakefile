@@ -94,6 +94,7 @@ Rake::TestTask.new do |t|
   t.libs << "lib"
   t.libs << "test"
   t.pattern = "test/**/*test.rb"
+  t.warning = false
 end
 
 ENV['COVERAGE'] = 'true'
