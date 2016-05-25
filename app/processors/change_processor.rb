@@ -3,6 +3,9 @@ class ChangeProcessor < Processors::Base
 
   setup_options do
     required :from
+
+    optional on_change: {},
+             on_same: {}
   end
 
   def handle
@@ -10,11 +13,11 @@ class ChangeProcessor < Processors::Base
 
     last = state['last']
 
-    return cancel! unless current != last
+    return cancel! options[:on_same] unless current != last
 
     state['last'] = current
 
-    propagate! event
+    propagate! options[:on_change]
   end
 
   protected

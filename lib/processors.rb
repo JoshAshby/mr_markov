@@ -32,14 +32,13 @@ class Processors
       end
     end
 
-    attr_reader :logger, :options, :event, :state, :propagate, :result
+    attr_reader :logger, :options, :state, :propagate, :result
 
-    def initialize(options:, event:, state: {}, logger: nil)
+    def initialize(options:, state: {}, logger: nil)
       @logger    = logger || Logger.new(STDOUT)
 
-      @propagate = true
+      @propagate = false
       @state     = state
-      @event     = event
       @result    = {}
       @options   = {}
 

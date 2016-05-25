@@ -9,7 +9,7 @@ class ReceiverBlock < AshFrame::Block
       frame_processor      = Processors.get frame.processor
       interpolated_options = interpolate frame.options, using: memo
 
-      processor            = frame_processor.new(options: interpolated_options, event: memo, state: frame.state.to_h, logger: logger)
+      processor            = frame_processor.new(options: interpolated_options, state: frame.state.to_h, logger: logger)
 
       begin
         processor.handle
@@ -40,6 +40,7 @@ class ReceiverBlock < AshFrame::Block
 
     frame_options.transform_values do |value|
       next Liquid::Template.parse(value).render!(liquid_context) if value.kind_of? String
+      next interpolate value, using: using if value.kind_of? Hash
       value
     end
   end

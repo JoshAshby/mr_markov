@@ -38,7 +38,19 @@ end
     {
       processor: 'change',
       options: {
-        from: "{{ image }}"
+        from: "{{ image }}",
+        on_change: {
+          alt: "{{ alt }}",
+          image: "{{ image }}"
+        }
+      }
+    },
+    {
+      processor: 'telegram',
+      options: {
+        token: ENV['TELEGRAM_TOKEN'],
+        chat_id: '204348342',
+        message: "Heya, there is a new http://xkcd.com available! {{ image }} with alt-text:\n\t{{ alt }}"
       }
     }
   ]

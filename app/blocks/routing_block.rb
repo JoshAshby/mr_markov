@@ -27,7 +27,7 @@ class RoutingBlock < AshFrame::Block
     length = command_entity.length
 
     command = message.text[0..length]
-    args = message.text[length+1..-1]
+    args    = message.text[length+1..-1]
 
     # TODO: Command Things
     MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.last_name }"
