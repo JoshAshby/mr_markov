@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 gem 'rake'
+gem 'thor'
 gem 'require_all'
 
 # gem 'ash_frame', path: '../ash_frame' # Local
