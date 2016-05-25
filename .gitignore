@@ -29,7 +29,7 @@ db/*.sqlite3
 /coverage.data
 /coverage/
 /db/*.sqlite3
-doc/
+docs/
 .yardoc/
 
 # Mac finder artifacts

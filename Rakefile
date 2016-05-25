@@ -107,8 +107,14 @@ namespace :test do
   end
 end
 
+
 YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb', 'app/**/*.rb', 'initializers/**/*.rb', 'mr_markov.rb']
-  t.options = [ '-', 'README.md' ]
+  t.files = ['app/**/*.rb', 'lib/**/*.rb', 'test/helpers/**/*.rb', 'test/mocks/**/*.rb', 'mr_markov.rb']
+
+  options = [ '-', 'README.md' ]
+  options.unshift '--output-dir', File.join(ENV['BUILD_ARTIFACTS'] || './', 'docs')
+
+  t.options = options
+
   # t.stats_options = ['--list-undoc']
 end

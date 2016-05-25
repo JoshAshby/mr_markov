@@ -1,0 +1,35 @@
+image: ruby:2.3.0
+
+services:
+  - redis:latest
+  - postgres:9.4
+
+cache:
+  paths:
+    - gems/
+
+variables:
+  POSTGRES_DB: mr_markov_test
+  POSTGRES_USER: postgres
+  RACK_RNV: test
+
+before_script:
+  - gem install bundler
+  - bundle install --path ./gems
+  - bundle exec rake db:migrate
+
+test:
+  stage: test
+  script: bundle exec rake test
+
+  artifacts:
+    paths:
+      - coverage/
+
+docs:
+  stage: test
+  script: bundle exec rake yard
+
+  artifacts:
+    paths:
+    - docs/
