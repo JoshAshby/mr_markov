@@ -1,3 +1,5 @@
+$:.unshift File.dirname(__FILE__)
+
 if ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start do

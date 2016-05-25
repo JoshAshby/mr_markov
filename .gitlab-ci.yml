@@ -6,7 +6,7 @@ services:
 
 cache:
   paths:
-    - gems/
+    - .gems/
 
 variables:
   POSTGRES_DB: mr_markov_test
