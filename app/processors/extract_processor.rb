@@ -21,6 +21,8 @@ class ExtractProcessor < Processors::Base
     @extracted_parts
   end
 
+  protected
+
   def json
     options[:extract].each do |key, path|
       path = JsonPath.new path

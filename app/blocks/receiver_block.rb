@@ -19,13 +19,13 @@ class ReceiverBlock < AshFrame::Block
         cancel    = processor.cancel
       rescue => e
         logger.error e
+        result = {}
         cancel = true
-        result = { error: e.message.to_s }
       end
 
       log_file.rewind
 
-      frame.update state: processor.state
+      frame.update state: processor.state.to_h
 
       Result.create frame: frame, result: result
       Log.create    frame: frame, log: log_file.read

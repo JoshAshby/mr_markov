@@ -2,17 +2,17 @@
 # registry of all processors by a nice easy to use name.
 class Processors
   class << self
-    def registery
+    def registry
       @@registery ||= []
     end
 
     def register name, as:
-      registery << [ name, as ]
+      registry << [ name, as ]
     end
 
     def get name
       name = name.to_sym
-      registery.find{ |parts| parts[0] == name }[1]
+      registry.find{ |parts| parts[0] == name }[1]
     end
   end
 
@@ -35,9 +35,11 @@ class Processors
     attr_reader :logger, :options, :state, :cancel
 
     def initialize(options:, state: {}, logger: nil)
-      @logger = logger || Logger.new(STDOUT) # TODO: Fix
+      @logger  = logger || Logger.new(STDOUT)
 
-      @state = state
+      @cancel  = false
+
+      @state   = state
       @options = {}
 
       self.class.options.each do |name, settings|

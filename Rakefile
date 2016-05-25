@@ -108,7 +108,6 @@ namespace :test do
   end
 end
 
-
 YARD::Rake::YardocTask.new do |t|
   t.files = ['app/**/*.rb', 'lib/**/*.rb', 'test/helpers/**/*.rb', 'test/mocks/**/*.rb', 'mr_markov.rb']
 
