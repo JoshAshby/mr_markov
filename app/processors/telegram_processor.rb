@@ -9,6 +9,8 @@ class TelegramProcessor < Processors::Base
 
   def handle
     bot.send_message chat_id: options[:chat_id], text: options[:message]
+
+    propagate!
   end
 
   protected

@@ -54,6 +54,7 @@ gem 'redis-rack'
 ## Elasticsearch
 # gem 'elasticsearch'
 # gem 'elasticsearch-model'
+# gem 'chewy'
 
 ## Neo4j
 # gem 'neo4j'
@@ -63,7 +64,7 @@ gem 'redis-rack'
 # gem 'bunny'
 
 # Async Workers
-# gem 'sidekiq'  # Redis Backed
+gem 'sidekiq'  # Redis Backed
 # gem 'sneakers' # RabbitMQ Backed
 
 # Frontend
@@ -71,7 +72,6 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'haml'
-gem 'rabl'
 gem 'liquid'
 
 gem 'thin'

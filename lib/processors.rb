@@ -10,6 +10,10 @@ class Processors
       registry << [ name, as ]
     end
 
+    def unregister name, as:
+      registry.delete [ name, as ]
+    end
+
     def get name
       name = name.to_sym
       registry.find{ |parts| parts[0] == name }[1]
@@ -25,6 +29,11 @@ class Processors
         name = name.to_sym
         Processors.register name, as: self
         @registered_as = name
+      end
+
+      def unregister
+        Processors.unregister @registered_as, as: self
+        @registered_as = nil
       end
 
       def setup_options *required, **optional, &block

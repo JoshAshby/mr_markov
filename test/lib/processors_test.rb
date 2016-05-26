@@ -8,6 +8,9 @@ class ProcessorsTest < MiniTest::Test
   def test_register
   end
 
+  def test_unregister
+  end
+
   def test_get
   end
 end
