@@ -2,17 +2,13 @@ require 'sinatra/base'
 require 'sinatra/content_for'
 require 'sinatra/flash'
 
+require 'erb'
+require 'tilt/erb'
+
 require 'haml'
 require 'tilt/haml'
 
-require 'rabl'
-
-require 'erb'
-require 'tilt/erb'
 require 'rack/session/redis'
-
-
-Rabl.register!
 
 class BaseController < Sinatra::Base
   set :views, -> { AshFrame.root.join 'app', 'views' }
@@ -36,7 +32,7 @@ class BaseController < Sinatra::Base
   # use Rack::Session::Cookie
   use Rack::Session::Redis
 
-  helpers Sinatra::ContentFor, AuthenticationHelper
+  helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
 
   def authenticate!
@@ -44,6 +40,13 @@ class BaseController < Sinatra::Base
       session[:return_path] = request.path
       flash[:error] = "You need to login to access that"
       halt redirect(to('/login'))
+    end
+  end
+
+  def self.auth_get *args, &block
+    get(*args) do
+      authenticate!
+      block.call
     end
   end
 end

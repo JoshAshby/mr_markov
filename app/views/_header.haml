@@ -1,0 +1,40 @@
+%section.hero.is-left.is-bold{ class: "#{ yield_content :header_hero_class if content_for? :header_hero_class }" }
+  .hero-header
+    %header.header
+      .container
+        .header-left.header-menu
+          - if content_for? :header_left
+            = yield_content :header_left
+
+          - else
+            %span.header-item
+              %a{ href: '/' }
+                Home
+
+        .header-center
+          = yield_content :header_center
+
+        .header-right
+          - if content_for? :header_left
+            = yield_content :header_right
+
+          - else
+            - if logged_in?
+              %span.header-item
+                Heya #{ current_user.username }!
+
+              %span.header-item
+                %small
+                  %a{ href: '/logout' } (Logout)
+
+            - else
+              %span.header-item
+                %a{ href: '/login' }
+                  Login
+
+  .hero-content
+    .container
+      = yield_content :header
+
+  .hero-footer
+    = partial :_flash

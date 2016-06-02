@@ -17,62 +17,12 @@
       %title Mr Markov
 
   %body{ data: { 'react-router-url' => yield_content(:react_router_url) } }
-    %section.hero.is-left.is-bold{ class: "#{ yield_content :header_hero_class if content_for? :header_hero_class }" }
-      .hero-header
-        %header.header
-          .container
-            .header-left.header-menu
-              - if content_for? :header_left
-                = yield_content :header_left
-              - else
-                %span.header-item
-                  %a{ href: '/' }
-                    Home
-
-            .header-center
-              = yield_content :header_center
-
-            .header-right
-              - if content_for? :header_left
-                = yield_content :header_right
-              - else
-                - if logged_in?
-                  %span.header-item
-                    Heya #{ current_user.username }!
-                - else
-                  %span.header-item
-                    %a{ href: '/login' }
-                      Login
-
-      .hero-content
-        .container
-          = yield_content :header
-
-      .hero-footer
-        = haml :_flash, layout: false
+    = partial :header
 
     - if content_for? :body
       = yield_content :body
 
-    %footer.footer
-      .container
-        .content.is-centered
-          %p
-            %strong Mr. Markov
-            by
-            %a{ href: 'https://joshisa.ninja' }
-              joshisa.ninja.
-            The content is licensed
-            %a{ href: "http://creativecommons.org/licenses/by-nc-sa/4.0/" }
-              CC ANS 4.0
-            unless otherwise noted.
-          %p
-            Built with
-            %a{ href: "www.sinatrarb.com" }
-              Sinatra
-            and
-            %a{ href:"http://bulma.io/" }
-              Bulma
+    = partial :footer
 
   %script{ type: 'text/javascript', src: '/static/app.js', charset: 'utf-8' }
 

@@ -73,6 +73,7 @@ gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'haml'
 gem 'liquid'
+# gem 'opal'
 
 gem 'thin'
 
