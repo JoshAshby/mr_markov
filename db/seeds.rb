@@ -50,7 +50,7 @@ end
       options: {
         token: ENV['TELEGRAM_TOKEN'],
         chat_id: '204348342',
-        message: "Heya, there is a new http://xkcd.com available! {{ image }} with alt-text:\n\t{{ alt }}"
+        message: "Heya! there is a new http://xkcd.com available! {{ image }} with alt-text:\n\t{{ alt }}"
       }
     }
   ]
@@ -60,4 +60,11 @@ end
   frames.each do |frame_options|
     Frame.create stack: stack, **frame_options
   end
+
+  trigger = Chronotrigger.create name: "#{ name } (#{ stack.id }) chronotrigger",
+    frequency_quantity: 1,
+    frequency_period: :minutes,
+    run_time: '8:00am',
+    job_klass: :StackRunnerBlock,
+    job_arguments: Marshal.dump([ [], { stack: stack, event: {} } ])
 end

@@ -23,11 +23,29 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.4)
+    celluloid (0.17.3)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.6)
+      timers (>= 4.1.1)
+    clockwork (2.0.0)
+      activesupport
+      tzinfo
     coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.0.2)
-    connection_pool (2.2.0)
     daemons (1.2.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -61,6 +79,7 @@ GEM
     haml (4.0.7)
       tilt
     hiredis (0.6.1)
+    hitimes (1.2.4)
     i18n (0.7.0)
     ice_nine (0.11.2)
     json (1.8.3)
@@ -125,10 +144,6 @@ GEM
       bcrypt (>= 3.1, < 4.0)
       sequel (>= 4.1.0, < 5.0)
     shellany (0.0.1)
-    sidekiq (4.1.2)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
-      redis (~> 3.2, >= 3.2.1)
     simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -158,6 +173,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.4)
+    timers (4.1.1)
+      hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     virtus (1.0.5)
@@ -176,6 +193,8 @@ DEPENDENCIES
   awesome_print
   bcrypt
   byebug
+  celluloid
+  clockwork
   excon
   faraday
   faraday_middleware
@@ -201,7 +220,6 @@ DEPENDENCIES
   sequel
   sequel_pg
   sequel_secure_password
-  sidekiq
   simplecov
   sinatra
   sinatra-contrib

@@ -1,4 +1,10 @@
-class ReceiverBlock < AshFrame::Block
+class StackRunnerBlock < AshFrame::Block
+  include Celluloid
+
+  def self.async_call(*args, **opts)
+    new(*args, **opts).async.send :run
+  end
+
   require :stack, :event
 
   def logic
@@ -19,6 +25,7 @@ class ReceiverBlock < AshFrame::Block
 
       fail "State is not a hash like object!" unless processor.state.respond_to? :to_h
       frame.update state: processor.state.to_h
+      frame.save
 
       fail "Result is not a hash like object!" unless processor.result.respond_to? :to_h
       Result.create frame: frame, result: processor.result.to_h

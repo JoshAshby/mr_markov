@@ -64,8 +64,10 @@ gem 'redis-rack'
 # gem 'bunny'
 
 # Async Workers
-gem 'sidekiq'  # Redis Backed
+# gem 'sidekiq'  # Redis Backed
 # gem 'sneakers' # RabbitMQ Backed
+gem 'clockwork'
+gem 'celluloid', require: 'celluloid/current'
 
 # Frontend
 gem 'sinatra'
