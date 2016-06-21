@@ -30,14 +30,14 @@ class RoutingBlock < AshFrame::Block
     args    = message.text[length+1..-1]
 
     # TODO: Command Things
-    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.last_name }. You're user id is: #{ message.from.id } and this chat id is: #{ message.chat.id }"
+    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.last_name }. Your user id is: #{ message.from.id } and this chat id is: #{ message.chat.id }"
 
     true
   end
 
   def handle_message
     # TODO: Message Things
-    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.first_name }. You're user id is: #{ message.from.id } and this chat id is: #{ message.chat.id }"
+    MrMarkov.telegram_api.send_message chat_id: message.chat.id, text: "Hello, #{ message.from.first_name }. Your user id is: #{ message.from.id } and this chat id is: #{ message.chat.id }"
 
     true
   end
