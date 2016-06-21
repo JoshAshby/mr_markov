@@ -1,0 +1,7 @@
+require_relative '../mr_markov'
+
+s = Scheduler.new
+s.start!
+s.defer
+
+trap("INT"){ exit }

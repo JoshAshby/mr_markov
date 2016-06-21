@@ -1,10 +1,4 @@
 class StackRunnerBlock < AshFrame::Block
-  include Celluloid
-
-  def self.async_call(*args, **opts)
-    new(*args, **opts).async.send :run
-  end
-
   require :stack, :event
 
   def logic

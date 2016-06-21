@@ -1,4 +1,6 @@
 class Result < Sequel::Model
+  include GlobalID::Identification
+
   plugin :validation_helpers
 
   many_to_one :frame

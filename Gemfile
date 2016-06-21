@@ -70,7 +70,7 @@ gem 'clockwork'
 gem 'celluloid', require: 'celluloid/current'
 
 # Frontend
-gem 'sinatra'
+gem 'sinatra', require: false
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'haml'

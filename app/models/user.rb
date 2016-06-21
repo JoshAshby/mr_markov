@@ -1,4 +1,6 @@
 class User < Sequel::Model
+  include GlobalID::Identification
+
   plugin :validation_helpers
   plugin :secure_password, include_validations: false
 

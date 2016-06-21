@@ -24,16 +24,24 @@ class ExtractProcessor < Processors::Base
   protected
 
   def json
+    logger.info "Handling as JSON"
+
     options[:extract].each do |key, path|
+      logger.debug "Extracting #{ key } as #{ path }"
+
       path = JsonPath.new path
       @extracted_parts[key] = path.on options[:from]
     end
   end
 
   def xml
+    logger.info "Handling as XML"
+
     body_giri = Nokogiri::HTML options[:from]
 
     options[:extract].each do |key, path|
+      logger.debug "Extracting #{ key } as #{ path }"
+
       nodes = body_giri.xpath path
 
       # Copied right out of Huginn

@@ -8,6 +8,8 @@ class TelegramProcessor < Processors::Base
   end
 
   def handle
+    logger.info "Sending message to #{ options[:chat_id] }"
+
     bot.send_message chat_id: options[:chat_id], text: options[:message]
 
     propagate!

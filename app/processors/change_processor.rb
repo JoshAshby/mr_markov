@@ -13,6 +13,9 @@ class ChangeProcessor < Processors::Base
 
     last = state['last']
 
+    logger.debug "Previous value: #{ last }"
+    logger.debug "Current value: #{ current }"
+
     return cancel! options[:on_same] unless current != last
 
     state['last'] = current
