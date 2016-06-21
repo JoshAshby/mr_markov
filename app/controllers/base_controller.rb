@@ -30,7 +30,7 @@ class BaseController < Sinatra::Base
 
   # enable :sessions
   # use Rack::Session::Cookie
-  use Rack::Session::Redis
+  use Rack::Session::Redis, **AshFrame.config_for(:redis).symbolize_keys.merge({ driver: :hiredis })
 
   helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
