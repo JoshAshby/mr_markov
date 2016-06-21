@@ -28,9 +28,9 @@ class BaseController < Sinatra::Base
     env["rack.errors"] = error_logger
   end
 
-  # enable :sessions
+  enable :sessions
   # use Rack::Session::Cookie
-  use Rack::Session::Redis, **AshFrame.config_for(:redis).symbolize_keys.merge({ driver: :hiredis })
+  # use Rack::Session::Redis, **AshFrame.config_for(:redis).symbolize_keys.merge({ driver: :hiredis })
 
   helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
