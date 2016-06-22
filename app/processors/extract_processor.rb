@@ -12,7 +12,7 @@ class ExtractProcessor < Processors::Base
     @extracted_parts = {}
 
     case options[:type]
-    when :json
+    when 'json'
       json
     else # Assume its an HTML document otherwise
       xml
@@ -61,8 +61,6 @@ class ExtractProcessor < Processors::Base
         end
         value.to_s
       end
-
-      result = result.first if result.kind_of?(Array) && result.length == 1
 
       @extracted_parts[key] = result
     end

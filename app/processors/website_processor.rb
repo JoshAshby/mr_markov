@@ -7,23 +7,20 @@ class WebsiteProcessor < Processors::Base
     optional method: :get,
              user_agent: 'xkcd-scraper v4.20yolo',
              headers: {},
+             body: nil,
              success_codes: (200..300),
              redirect_limit: 3
   end
 
   def handle
-    response = faraday.send options[:method].to_sym, options[:url]
+    response = faraday.send options[:method].to_sym, options[:url], options[:body]
 
-    status = response.status
-
-    logger.error "Did not get a successful status code!" and return unless options[:success_codes].include? status
-
-    body = response.body
+    logger.error "Did not get a successful status code!" and return unless options[:success_codes].include? response.status
 
     propagate!({
       status: response.status,
       headers: response.headers,
-      body: body
+      body: response.body.force_encoding('utf-8')
     })
   end
 

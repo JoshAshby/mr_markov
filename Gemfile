@@ -14,6 +14,7 @@ gem 'activesupport', '~> 4', require: 'active_support/all'
 # Request making
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'faraday-encoding'
 # gem 'typhoeus'
 gem 'excon'
 # gem 'robotstxt-parser', require: 'robotstxt'
