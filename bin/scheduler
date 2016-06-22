@@ -12,7 +12,7 @@ class WorkerScheduler < Scheduler
 
       klass.new.async.send chronotrigger.job_function, chronotrigger.job_arguments
 
-      chronotrigger.update last_ran: chronotrigger.last_ran + repeat_delta
+      chronotrigger.update last_ran: chronotrigger.last_ran + chronotrigger.repeat_delta
       chronotrigger.save
     end
   end
