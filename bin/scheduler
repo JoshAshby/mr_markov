@@ -3,7 +3,7 @@ require_relative '../mr_markov'
 class WorkerScheduler < Scheduler
   def on_tick
     MrMarkov.logger.debug "Loading chronotriggers ..."
-    chronotriggers = Chronotrigger.where{ last_ran + repeat_delta <= Time.current.to_i }
+    chronotriggers = Chronotrigger.where{ last_ran - Time.current.to_i < 0 }
 
     chronotriggers.each do |chronotrigger|
       MrMarkov.logger.debug "Running chronotrigger for #{ chronotrigger.job_klass }"
@@ -12,7 +12,7 @@ class WorkerScheduler < Scheduler
 
       klass.new.async.send chronotrigger.job_function, chronotrigger.job_arguments
 
-      chronotrigger.update last_ran: chronotrigger.last_ran + chronotrigger.repeat_delta
+      chronotrigger.update last_ran: Time.current.to_i
       chronotrigger.save
     end
   end

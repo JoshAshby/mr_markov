@@ -5,8 +5,11 @@ Sequel.migration do
 
       String :name, null: false
 
-      Integer :last_ran
-      Integer :repeat_delta
+      DateTime :last_ran
+      DateTime :run_at
+
+      bit :day_mask, size: 7
+      interval :repeat
 
       String :job_klass, null: false
       String :job_function, null: false

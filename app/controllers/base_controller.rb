@@ -8,7 +8,7 @@ require 'tilt/erb'
 require 'haml'
 require 'tilt/haml'
 
-require 'rack/session/redis'
+# require 'rack/session/redis'
 
 class BaseController < Sinatra::Base
   set :views, -> { AshFrame.root.join 'app', 'views' }

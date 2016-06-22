@@ -21,8 +21,9 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        start_time: '8:00am',
-        repeat_delta: 1.day
+        run_at: '8:00am',
+        day_mask: 0101010,
+        repeat: 1
       }
     ],
     frames: [
@@ -67,8 +68,9 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        start_time: '4:00am',
-        repeat_delta: 4.hours
+        run_at: '6:00am',
+        day_mask: 1111111,
+        repeat: 1
       }
     ],
     frames: [
@@ -150,11 +152,12 @@ Summary: {{ summary[0] }}"
   data[:triggers].each do |trigger|
     case trigger[:type]
     when :chronotrigger
-      BlockRunnerWorker.schedule_async start_time: trigger[:start_time],
-        repeat_delta: trigger[:repeat_delta],
-        block_klass: StackRunnerBlock,
-        stack: stack,
-        event: {}
+      BlockRunnerWorker.schedule_async run_at: trigger[:run_at],
+                                       day_mask: trigger[:day_mask],
+                                       repeat: trigger[:repeat],
+                                       block_klass: StackRunnerBlock,
+                                       stack: stack,
+                                       event: {}
     end
   end
 end

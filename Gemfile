@@ -50,7 +50,7 @@ gem 'hiredis'
 # gem 'redlock'
 
 gem 'redis-activesupport'
-gem 'redis-rack'
+# gem 'redis-rack'
 
 ## Elasticsearch
 # gem 'elasticsearch'
@@ -67,7 +67,7 @@ gem 'redis-rack'
 # Async Workers
 # gem 'sidekiq'  # Redis Backed
 # gem 'sneakers' # RabbitMQ Backed
-gem 'clockwork'
+# gem 'clockwork'
 gem 'celluloid', require: 'celluloid/current'
 
 # Frontend
