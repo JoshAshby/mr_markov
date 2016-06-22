@@ -8,7 +8,7 @@ class Scheduler
   end
 
   def start!
-    perform_tasks
+    on_tick
 
     @timer = every(@tick) do
       on_tick
