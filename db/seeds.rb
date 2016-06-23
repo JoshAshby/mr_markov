@@ -22,8 +22,8 @@ end
       {
         type: :chronotrigger,
         run_at: '8:00am',
-        day_mask: 0101010,
-        repeat: 1
+        day_mask: '0101010',
+        repeat: '1 week'
       }
     ],
     frames: [
@@ -69,8 +69,8 @@ end
       {
         type: :chronotrigger,
         run_at: '6:00am',
-        day_mask: 1111111,
-        repeat: 1
+        day_mask: '1111111',
+        repeat: '1 week'
       }
     ],
     frames: [

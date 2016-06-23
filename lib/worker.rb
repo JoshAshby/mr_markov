@@ -26,10 +26,10 @@ class Worker
       true
     end
 
-    def schedule_async *args, start_time:, repeat_delta:, **opts
+    def schedule_async *args, run_at:, day_mask:, repeat:, **opts
       res = serialize_args(*args, **opts)
 
-      scheduler.call res, start_time: start_time, repeat_delta: repeat_delta
+      scheduler.call res, run_at: run_at, day_mask: day_mask, repeat: repeat
 
       true
     end

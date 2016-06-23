@@ -3,10 +3,11 @@ class BlockRunnerWorker < Worker
     BlockRunnerWorker.new.async.work packet
   end
 
-  set_scheduler do |packet, start_time:, repeat_delta:|
+  set_scheduler do |packet, run_at:, day_mask:, repeat:|
     Chronotrigger.create name: SecureRandom.hex,
-        last_ran: start_time.to_i,
-        repeat_delta: repeat_delta.to_i,
+        run_at: Time.parse(run_at).strftime('%R'),
+        day_mask: day_mask.to_s,
+        repeat: repeat,
         job_klass: :BlockRunnerWorker,
         job_function: :work,
         job_arguments: packet

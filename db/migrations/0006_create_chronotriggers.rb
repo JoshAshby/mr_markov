@@ -5,10 +5,10 @@ Sequel.migration do
 
       String :name, null: false
 
-      DateTime :last_ran
-      DateTime :run_at
+      column :last_ran, :date
+      column :run_at,   :time
 
-      bit :day_mask, size: 7
+      bit      :day_mask, size: 7
       interval :repeat
 
       String :job_klass, null: false

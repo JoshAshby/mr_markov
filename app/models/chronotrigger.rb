@@ -5,6 +5,6 @@ class Chronotrigger < Sequel::Model
 
   def validate
     super
-    validates_presence [ :name, :last_ran, :job_klass, :job_function ]
+    validates_presence [ :name, :job_klass, :job_function ]
   end
 end
