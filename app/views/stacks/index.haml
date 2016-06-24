@@ -1,0 +1,13 @@
+- content_for :title do
+  Your Stacks
+
+- content_for :header do
+  %h1 Your Stacks
+
+- content_for :body do
+  .container
+    .card-columns
+      - @stacks.each do |stack|
+        .card.card-block
+          %h3.card-title= stack.name
+          %a.card-link{ href: "/stacks/#{ stack.id }" } Inspect

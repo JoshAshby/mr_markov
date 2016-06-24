@@ -2,20 +2,19 @@
   Login
 
 - content_for :header do
-  %h1.title Login
+  %h1 Login
 
 - content_for :body do
-  %section.section
-    .container
-      .columns
-        .column.is-third
-        .column.is-third
-          %form{ action: '/login', method: 'post' }
-            %p.control
-              %input.input{ type: 'text', placeholder: 'Username', name: 'username' }
-            %p.control
-              %input.input{ type: 'password', placeholder: '*******', name: 'password' }
+  .container
+    .row
+      .col-xs-4
+      .col-xs-4
+        %form{ action: '/login', method: 'post' }
+          %fieldset.form-group
+            %input.form-control{ type: 'text', placeholder: 'Username', name: 'username' }
+          %fieldset.form-group
+            %input.form-control{ type: 'password', placeholder: '*******', name: 'password' }
 
-            %p.control
-              %button.button.is-primary{ type: 'submit' }
-                Login
+          %fieldset.form-group
+            %button.btn.btn-primary.btn-block{ type: 'submit' }
+              Login

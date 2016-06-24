@@ -3,6 +3,7 @@ class AuthenticationController < BaseController
   get '/login' do
     return haml :login unless logged_in?
 
+    session.delete :return_path
     redirect to('/')
   end
 
@@ -13,12 +14,12 @@ class AuthenticationController < BaseController
 
     if user.blank?
       flash.now[:error] = "User or Password does not match"
-      return haml :login
+      halt haml :login
     end
 
     unless user.authenticate(params['password'])
       flash.now[:error] = "User or Password does not match"
-      return haml :login
+      halt haml :login
     end
 
     session[:user_id] = user.id
@@ -29,7 +30,7 @@ class AuthenticationController < BaseController
   end
 
   get '/logout' do
-    session[:user_id] = nil
+    session.delete :user_id
 
     redirect to('/')
   end

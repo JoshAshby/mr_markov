@@ -2,8 +2,10 @@
   Mr Markov
 
 - content_for :header do
-  %h1.title Mr Markov
+  %h1 Mr Markov
 
-- content_for :body do
-  %section.section
+- if logged_in?
+  - content_for :body do
     .container
+      %a{ href: '/stacks' }
+        Your Stacks

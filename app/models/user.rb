@@ -4,6 +4,8 @@ class User < Sequel::Model
   plugin :validation_helpers
   plugin :secure_password, include_validations: false
 
+  one_to_many :stacks
+
   def validate
     super
     validates_presence [ :username ]

@@ -38,15 +38,44 @@ class BaseController < Sinatra::Base
   def authenticate!
     unless logged_in?
       session[:return_path] = request.path
-      flash[:error] = "You need to login to access that"
-      halt redirect(to('/login'))
+      flash.now[:danger] = "You need to login to access that"
+
+      halt haml(:login)
     end
   end
 
   def self.auth_get *args, &block
     get(*args) do
       authenticate!
-      block.call
+      instance_eval(&block)
+    end
+  end
+
+  def self.auth_post *args, &block
+    post(*args) do
+      authenticate!
+      instance_eval(&block)
+    end
+  end
+
+  def self.auth_put *args, &block
+    put(*args) do
+      authenticate!
+      instance_eval(&block)
+    end
+  end
+
+  def self.auth_patch *args, &block
+    patch(*args) do
+      authenticate!
+      instance_eval(&block)
+    end
+  end
+
+  def self.auth_delete *args, &block
+    delete(*args) do
+      authenticate!
+      instance_eval(&block)
     end
   end
 end

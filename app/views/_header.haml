@@ -1,40 +1,25 @@
-%section.hero.is-left.is-bold{ class: "#{ yield_content :header_hero_class if content_for? :header_hero_class }" }
-  .hero-header
-    %header.header
-      .container
-        .header-left.header-menu
-          - if content_for? :header_left
-            = yield_content :header_left
+%nav.navbar.navbar-full.navbar-light.bg-faded
+  .container
+    %a.navbar-brand{ href: '/' } Mr Markov
 
-          - else
-            %span.header-item
-              %a{ href: '/' }
-                Home
+    %ul.nav.navbar-nav.pull-xs-right
+      - if logged_in?
+        %li.nav-item
+          %a.nav-link{ href: '/settings' }
+            Heya #{ current_user.username }!
 
-        .header-center
-          = yield_content :header_center
+        %li.nav-item
+          %a.nav-link{ href: '/logout' }
+            %small
+              (Logout)
 
-        .header-right
-          - if content_for? :header_left
-            = yield_content :header_right
+      - else
+        %li.nav-item
+          %a.nav-link{ href: '/login' }
+            Login
 
-          - else
-            - if logged_in?
-              %span.header-item
-                Heya #{ current_user.username }!
+.jumbotron.jumbotron-fluid
+  .container
+    = yield_content :header
 
-              %span.header-item
-                %small
-                  %a{ href: '/logout' } (Logout)
-
-            - else
-              %span.header-item
-                %a{ href: '/login' }
-                  Login
-
-  .hero-content
-    .container
-      = yield_content :header
-
-  .hero-footer
-    = partial :flash
+= partial :flash

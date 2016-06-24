@@ -14,6 +14,8 @@ class ExtractProcessor < Processors::Base
     case options[:type]
     when 'json'
       json
+    when 'regex'
+      regex
     else # Assume its an HTML document otherwise
       xml
     end
@@ -31,6 +33,18 @@ class ExtractProcessor < Processors::Base
 
       path = JsonPath.new path
       @extracted_parts[key] = path.on options[:from]
+    end
+  end
+
+  def regex
+    logger.info "Handling as Regex"
+
+    options[:extract].each do |key, path|
+      logger.debug "Extracting #{ key } as #{ path }"
+
+      regex = Regexp.compile path
+      matches = regex.match options[:from]
+      @extracted_parts[key] = matches.captures
     end
   end
 

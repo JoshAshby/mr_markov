@@ -1,0 +1,9 @@
+- content_for :title do
+  Stack ##{ @stack.id }
+
+- content_for :header do
+  %h1= @stack.name
+  %p.lead Stack ##{ @stack.id }
+
+- content_for :body do
+  .container
