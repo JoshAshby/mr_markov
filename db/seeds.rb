@@ -21,7 +21,7 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        run_at: '8:00am',
+        run_at: '8:00am MST',
         day_mask: '0101010',
         repeat: '1 week'
       }
@@ -68,8 +68,38 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        run_at: '6:00am',
+        run_at: '6:00am MST',
+        day_mask: '0111110',
+        repeat: '1 week'
+      },
+      {
+        type: :chronotrigger,
+        run_at: '8:00am MST',
         day_mask: '1111111',
+        repeat: '1 week'
+      },
+      {
+        type: :chronotrigger,
+        run_at: '10:00am MST',
+        day_mask: '1111111',
+        repeat: '1 week'
+      },
+      {
+        type: :chronotrigger,
+        run_at: '12:00pm MST',
+        day_mask: '0111110',
+        repeat: '1 week'
+      },
+      {
+        type: :chronotrigger,
+        run_at: '2:00pm MST',
+        day_mask: '1111111',
+        repeat: '1 week'
+      },
+      {
+        type: :chronotrigger,
+        run_at: '4:00pm MST',
+        day_mask: '0111110',
         repeat: '1 week'
       }
     ],
@@ -97,7 +127,8 @@ end
         options: {
           token: ENV['TELEGRAM_TOKEN'],
           chat_id: '204348342',
-          message: "Temp: {% if temperature[0] > 80.0 %}HOT{% elsif temperature[0] >= 65.0 && temperature[0] <= 80.0 %}NICE{% elsif temperature[0] < 65.0 && temperature[0] >= 40.0 %}CHILLY{% elsif temperature[0] < 40.0 %}COLD{% else %}¯\_(๏̯͡๏)_/¯ {% endif %} ({{temperature[0]}}F)
+          message: "Hey there, heres the predicted weather in an hour:
+Temp: {% if temperature[0] > 80.0 %}HOT{% elsif temperature[0] >= 65.0 && temperature[0] <= 80.0 %}NICE{% elsif temperature[0] < 65.0 && temperature[0] >= 40.0 %}CHILLY{% elsif temperature[0] < 40.0 %}COLD{% else %}¯\_(๏̯͡๏)_/¯ {% endif %} ({{temperature[0]}}F)
 Precip: {% if precipitation_chance[0] >= 0.15 && precipitation_chance[0] < 0.40 %}QUESTIONABLY WET{% elsif precipitation_chance[0] >= 0.40 && precipitation_chance[0] < 0.60 %}WET{% elsif precipitation_chance[0] >= 0.60 %}SUPAWET{% else %}NOAP{% endif %} ({{ precipitation_chance[0] * 100.0 | ceil }}%)
 Summary: {{ summary[0] }}"
         }
@@ -135,7 +166,8 @@ Summary: {{ summary[0] }}"
         options: {
           token: ENV['TELEGRAM_TOKEN'],
           chat_id: '204348342',
-          message: "Temp: {% if temperature[0] > 80.0 %}HOT{% elsif temperature[0] >= 65.0 && temperature[0] <= 80.0 %}NICE{% elsif temperature[0] < 65.0 && temperature[0] >= 40.0 %}CHILLY{% elsif temperature[0] < 40.0 %}COLD{% else %}¯\_(๏̯͡๏)_/¯ {% endif %} ({{temperature[0]}}F)
+          message: "Currently weather:
+Temp: {% if temperature[0] > 80.0 %}HOT{% elsif temperature[0] >= 65.0 && temperature[0] <= 80.0 %}NICE{% elsif temperature[0] < 65.0 && temperature[0] >= 40.0 %}CHILLY{% elsif temperature[0] < 40.0 %}COLD{% else %}¯\_(๏̯͡๏)_/¯ {% endif %} ({{temperature[0]}}F)
 Precip: {% if precipitation_chance[0] >= 0.15 && precipitation_chance[0] < 0.40 %}QUESTIONABLY WET{% elsif precipitation_chance[0] >= 0.40 && precipitation_chance[0] < 0.60 %}WET{% elsif precipitation_chance[0] >= 0.60 %}SUPAWET{% else %}NOAP{% endif %} ({{ precipitation_chance[0] * 100.0 | ceil }}%)
 Summary: {{ summary[0] }}"
         }

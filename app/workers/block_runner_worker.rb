@@ -5,7 +5,7 @@ class BlockRunnerWorker < Worker
 
   set_scheduler do |packet, run_at:, day_mask:, repeat:|
     Chronotrigger.create name: SecureRandom.hex,
-        run_at: Time.parse(run_at).strftime('%R'),
+        run_at: Time.parse(run_at).utc.strftime('%R'),
         day_mask: day_mask.to_s,
         repeat: repeat,
         job_klass: :BlockRunnerWorker,

@@ -3,7 +3,12 @@ require_relative '../mr_markov'
 class WorkerScheduler < Scheduler
   def on_tick
     MrMarkov.logger.debug "Loading chronotriggers ..."
-    chronotriggers = Chronotrigger.where("(day_mask & B'0001000')::integer != 0 AND run_at < CURRENT_TIME AND (last_ran != CURRENT_DATE OR last_ran IS NULL)")
+
+    day_mask = [].fill(0, 0, 7)
+    day_mask[Time.current.wday] = 1
+    day_mask = day_mask.join
+
+    chronotriggers = Chronotrigger.where("(day_mask & B'#{ day_mask }')::integer != 0 AND run_at < CURRENT_TIME AND (last_ran != CURRENT_DATE OR last_ran IS NULL)")
 
     chronotriggers.each do |chronotrigger|
       MrMarkov.logger.debug "Running chronotrigger for #{ chronotrigger.job_klass }"
