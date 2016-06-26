@@ -1,6 +1,11 @@
 %nav.navbar.navbar-full.navbar-light.bg-faded
   .container
     %a.navbar-brand{ href: '/' } Mr Markov
+    %ul.nav.navbar-nav
+      -if logged_in?
+        %li.nav-item
+          %a.nav-link{ href: '/stacks' }
+            Your Stacks
 
     %ul.nav.navbar-nav.pull-xs-right
       - if logged_in?

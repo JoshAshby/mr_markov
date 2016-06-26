@@ -22,12 +22,14 @@ class BaseController < Sinatra::Base
 
   configure do
     use ::Rack::CommonLogger, access_logger
+    use ::Rack::MethodOverride # Allows the use of ujs and data-methods on links
   end
 
   before do
     env["rack.errors"] = error_logger
   end
 
+  set :session_secret, 'super secret'
   enable :sessions
   # use Rack::Session::Cookie
   # use Rack::Session::Redis, **AshFrame.config_for(:redis).symbolize_keys.merge({ driver: :hiredis })

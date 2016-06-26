@@ -3,6 +3,7 @@ class ApplicationController < BaseController
   use AuthenticationController
   use TelegramController
   use StacksController
+  use ChronotriggersController
 
   get '/' do
     haml :index

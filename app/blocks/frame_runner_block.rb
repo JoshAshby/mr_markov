@@ -1,4 +1,4 @@
-class FrameRunnerBlock < AshFrame::Block
+class RunFrameBlock < AshFrame::Block
   require :frame, :event
 
   def logic

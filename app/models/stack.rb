@@ -5,6 +5,7 @@ class Stack < Sequel::Model
 
   many_to_one :user
   one_to_many :frames
+  one_to_many :chronotriggers
 
   def validate
     super

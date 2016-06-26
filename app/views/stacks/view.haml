@@ -7,3 +7,12 @@
 
 - content_for :body do
   .container
+    %h1 Chronotriggers
+    %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
+      New
+
+    - if @stack.chronotriggers.any?
+      = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers }
+    - else
+      %p
+        This stack has no chronotriggers yet

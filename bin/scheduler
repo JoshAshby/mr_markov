@@ -1,25 +1,10 @@
+#!/usr/bin/env ruby
+
 require_relative '../mr_markov'
 
 class WorkerScheduler < Scheduler
   def on_tick
-    MrMarkov.logger.debug "Loading chronotriggers ..."
-
-    day_mask = [].fill(0, 0, 7)
-    day_mask[Time.current.wday] = 1
-    day_mask = day_mask.join
-
-    chronotriggers = Chronotrigger.where("(day_mask & B'#{ day_mask }')::integer != 0 AND run_at < CURRENT_TIME AND (last_ran != CURRENT_DATE OR last_ran IS NULL)")
-
-    chronotriggers.each do |chronotrigger|
-      MrMarkov.logger.debug "Running chronotrigger for #{ chronotrigger.job_klass }"
-
-      klass = Object.const_get chronotrigger.job_klass
-
-      klass.new.async.send chronotrigger.job_function, chronotrigger.job_arguments
-
-      chronotrigger.update last_ran: Time.current
-      chronotrigger.save
-    end
+    RunActiveChronotriggersWorker.perform_async
   end
 end
 

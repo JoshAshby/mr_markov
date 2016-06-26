@@ -1,0 +1,28 @@
+%table.table.table-hover
+  %thead.thead-inverse
+    %tr
+      %th Name
+      %th Runs at Time
+      %th Runs on Days
+      %th Repeats
+      %th Last Ran
+      %th Event
+      %th Actions
+
+  %tbody
+    - chronotriggers.each do |chronotrigger|
+      %tr
+        %td= chronotrigger.name
+        %td= chronotrigger.run_at
+        %td= chronotrigger.day_mask
+        %td
+          = chronotrigger.repeat
+          = 'Week'.pluralize(chronotrigger.repeat)
+        %td= chronotrigger.last_ran
+        %td= chronotrigger.event.to_json
+        %td
+          .btn-group
+            %a.btn.btn-primary-outline{ href: "/chronotriggers/#{ chronotrigger.id }" }
+              Edit
+          %a.btn.btn-danger-outline{ href: "/chronotriggers/#{ chronotrigger.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this trigger?' } }
+            Delete
