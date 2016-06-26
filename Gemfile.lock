@@ -1,5 +1,6 @@
-PATH
-  remote: ../ash_frame
+GIT
+  remote: http://code.isin.space/JoshAshby/AshFrame.git
+  revision: 6bb015266064e6463a537bbfd13ae0ed4182570b
   specs:
     ash_frame (1.0.0)
 
