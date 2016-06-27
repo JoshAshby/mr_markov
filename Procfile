@@ -1,2 +1,2 @@
-web: bundle exec thin start -p 5000 -R config.ru -D -V
+web: bundle exec rackup -p 5000 -s thin
 worker: bundle exec ruby bin/scheduler
