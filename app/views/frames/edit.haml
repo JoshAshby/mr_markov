@@ -1,0 +1,15 @@
+- content_for :title do
+  Edit Frame
+
+- content_for :header do
+  %h1 Editing Frame: ##{ @frame.id } - #{ @frame.processor.capitalize }
+  %p.lead
+    For Stack:
+    %a{ href: "/stacks/#{ @frame.stack.id }" }= @frame.stack.name
+
+- content_for :body do
+  .container
+    .row
+      .col-xs-4
+      .col-xs-4
+        = partial 'frames/form', locals: { frame: @frame, processors: @processors }

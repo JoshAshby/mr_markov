@@ -3,6 +3,7 @@
     %tr
       %th Order
       %th Processor Name
+      %th Options
       %th Actions
 
   %tbody
@@ -10,9 +11,14 @@
       %tr
         %td= frame.position
         %td= frame.processor.capitalize
+        %td= frame.options.to_json.truncate(80)
         %td
           .btn-group
-            %a.btn.btn-primary-outline{ href: "/frames/#{ frame.id }/edit" }
-              Edit
+            %a.btn.btn-secondary-outline{ href: "/frames/#{ frame.id }/move_down", data: { method: 'post' } }
+              %i.fa.fa-chevron-down
+            %a.btn.btn-secondary-outline{ href: "/frames/#{ frame.id }/move_up", data: { method: 'post' } }
+              %i.fa.fa-chevron-up
+          %a.btn.btn-primary-outline{ href: "/frames/#{ frame.id }/edit" }
+            Edit
           %a.btn.btn-danger-outline{ href: "/frames/#{ frame.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this frame?' } }
             Delete

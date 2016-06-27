@@ -1,0 +1,32 @@
+- if frame.new?
+  - url = '/frames'
+- else
+  - url = "/frames/#{ frame.id }"
+
+%form{ method: :post, action: url }
+  %fieldset.form-group
+    %label{ for: :stack } Stack
+    - if frame.stack
+      %p.form-control-static= frame.stack.name
+      %input{ type: :hidden, id: :stack, name: :stack, value: frame.stack.id }
+    - else
+      %select.form-control{ id: :stack, name: :stack, required: true }
+        - stacks.each do |stack|
+          %option{ value: stack.id }= stack.name
+
+  %fieldset.form-group
+    %label{ for: :processor } Processor
+    %select.form-control{ id: :processor, name: :processor, required: true }
+      - processors.each do |processor|
+        %option{ value: processor, selected: (processor.to_s == frame.processor) }= processor.capitalize
+
+  %fieldset.form-group
+    %label{ for: :name } Options
+    %input.form-control{ type: :text, id: :options, name: :options, required: true, value: frame.options.to_json }
+
+    %fieldset.form-group
+      %button.btn.btn-primary.btn-block{ type: 'submit' }
+        - if frame.new?
+          Create
+        - else
+          Update

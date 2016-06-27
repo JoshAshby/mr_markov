@@ -1,6 +1,12 @@
 class FramesController < BaseController
   auth_post '/frames' do
     stack = Stack.find id: params['stack']
+
+    data = {
+      processor: params['processor'],
+      options: params['options']
+    }
+
     stack.add_frame(**data)
 
     flash[:info] = "Successfully created frame"
@@ -10,6 +16,7 @@ class FramesController < BaseController
 
   auth_get '/frames/:id/edit' do
     @frame = Frame.find id: params['id']
+    @processors = Processors.registry.map(&:first)
 
     haml :'frames/edit'
   end
@@ -17,10 +24,35 @@ class FramesController < BaseController
   auth_post '/frames/:id' do
     frame = Frame.find id: params['id']
 
+    data = {
+      processor: params['processor'],
+      options: params['options']
+    }
+
     frame.update(**data)
     frame.save
 
     flash[:info] = "Successfully updated frame"
+
+    redirect to("/stacks/#{ frame.stack_id }")
+  end
+
+  auth_post '/frames/:id/move_down' do
+    frame = Frame.find id: params['id']
+
+    frame.move_down
+
+    flash[:info] = "Successfully moved frame down"
+
+    redirect to("/stacks/#{ frame.stack_id }")
+  end
+
+  auth_post '/frames/:id/move_up' do
+    frame = Frame.find id: params['id']
+
+    frame.move_up
+
+    flash[:info] = "Successfully moved frame up"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end

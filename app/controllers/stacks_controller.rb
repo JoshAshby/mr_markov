@@ -11,6 +11,14 @@ class StacksController < BaseController
     haml :'stacks/view'
   end
 
+  auth_get '/stacks/:id/frames/new' do
+    @stack = StackPresenter.new Stack.find(id: params['id'])
+    @frame = Frame.new stack: @stack
+    @processors = Processors.registry.map(&:first)
+
+    haml :'frames/new'
+  end
+
   auth_get '/stacks/:id/chronotriggers/new' do
     @stack = StackPresenter.new Stack.find(id: params['id'])
     @chronotrigger = Chronotrigger.new stack: @stack, day_mask: '0111110', repeat: 1, run_at: '00:00'
