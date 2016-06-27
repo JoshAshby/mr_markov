@@ -31,6 +31,7 @@ class StacksController < BaseController
     stack.destroy
 
     flash[:info] = "Successfully destroyed stack"
+    log "Destroyed stack #{ stack.id }"
 
     redirect to("/stacks")
   end

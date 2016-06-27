@@ -10,6 +10,7 @@ class FramesController < BaseController
     stack.add_frame(**data)
 
     flash[:info] = "Successfully created frame"
+    log "Createdd frame #{ frame.id }"
 
     redirect to("/stacks/#{ stack.id }")
   end
@@ -27,6 +28,7 @@ class FramesController < BaseController
     frame.move_down
 
     flash[:info] = "Successfully moved frame down"
+    log "Moved frame #{ frame.id } down to #{ frame.position }"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end
@@ -37,6 +39,7 @@ class FramesController < BaseController
     frame.move_up
 
     flash[:info] = "Successfully moved frame up"
+    log "Moved frame #{ frame.id } up to #{ frame.position }"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end
@@ -53,6 +56,7 @@ class FramesController < BaseController
     frame.save
 
     flash[:info] = "Successfully updated frame"
+    log "Updated frame #{ frame.id }"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end
@@ -62,6 +66,7 @@ class FramesController < BaseController
     frame.destroy
 
     flash[:info] = "Successfully destroyed frame"
+    log "Destroyed frame #{ frame.id }"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end

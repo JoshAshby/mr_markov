@@ -8,8 +8,6 @@ require 'tilt/erb'
 require 'haml'
 require 'tilt/haml'
 
-# require 'rack/session/redis'
-
 class BaseController < Sinatra::Base
   set :views, -> { AshFrame.root.join 'app', 'views' }
   set :public_folder, -> { AshFrame.root.join 'public' }
@@ -20,10 +18,8 @@ class BaseController < Sinatra::Base
   error_logger      = AshFrame.root.join('logs', 'error.log').open("a+")
   error_logger.sync = true
 
-  configure do
-    use ::Rack::CommonLogger, access_logger
-    use ::Rack::MethodOverride # Allows the use of ujs and data-methods on links
-  end
+  use Rack::CommonLogger, access_logger
+  use Rack::MethodOverride # Allows the use of ujs and data-methods on links
 
   configure :development do
     use BetterErrors::Middleware
@@ -36,8 +32,6 @@ class BaseController < Sinatra::Base
 
   set :session_secret, 'super secret'
   enable :sessions
-  # use Rack::Session::Cookie
-  # use Rack::Session::Redis, **AshFrame.config_for(:redis).symbolize_keys.merge({ driver: :hiredis })
 
   helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
@@ -84,5 +78,9 @@ class BaseController < Sinatra::Base
       authenticate!
       instance_eval(&block)
     end
+  end
+
+  def log message, level: :info
+    MrMarkov.logger.send level, "[#{ logged_in? ? current_user : 'anonymous' }] - #{ message }"
   end
 end

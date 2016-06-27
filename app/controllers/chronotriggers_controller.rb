@@ -13,9 +13,10 @@ class ChronotriggersController < BaseController
     }
 
     stack = Stack.find id: params['stack']
-    stack.add_chronotrigger(**data)
+    trigger = stack.add_chronotrigger(**data)
 
     flash[:info] = "Successfully created chronotrigger"
+    log "Created chronotrigger #{ trigger.id }"
 
     redirect to("/stacks/#{ stack.id }")
   end
@@ -45,6 +46,7 @@ class ChronotriggersController < BaseController
     trigger.save
 
     flash[:info] = "Successfully updated chronotrigger"
+    log "Updated chronotrigger #{ trigger.id }"
 
     redirect to("/stacks/#{ trigger.stack_id }")
   end
@@ -54,6 +56,7 @@ class ChronotriggersController < BaseController
     trigger.destroy
 
     flash[:info] = "Successfully destroyed chronotrigger"
+    log "Destroy chronotrigger #{ trigger.id }"
 
     redirect to("/stacks/#{ trigger.stack_id }")
   end
