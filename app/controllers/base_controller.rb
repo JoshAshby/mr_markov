@@ -30,7 +30,7 @@ class BaseController < Sinatra::Base
     env["rack.errors"] = error_logger
   end
 
-  set :session_secret, ENV['session_secret']
+  set :session_secret, ENV['SESSION_SECRET']
   enable :sessions
 
   helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
