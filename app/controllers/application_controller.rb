@@ -1,4 +1,6 @@
 class ApplicationController < BaseController
+  enable :sessions
+
   use HealthController
 
   use AuthenticationController

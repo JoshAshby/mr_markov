@@ -31,7 +31,6 @@ class BaseController < Sinatra::Base
   end
 
   set :session_secret, ENV['SESSION_SECRET']
-  enable :sessions
 
   helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
