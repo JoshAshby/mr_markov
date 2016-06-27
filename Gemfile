@@ -74,8 +74,6 @@ gem 'celluloid', require: 'celluloid/current'
 gem 'sinatra', require: false
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
-gem 'better_errors'
-gem 'binding_of_caller'
 gem 'haml'
 gem 'liquid'
 # gem 'opal'
@@ -94,6 +92,9 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'awesome_print'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 
   gem 'guard'
   gem 'guard-minitest'

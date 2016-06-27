@@ -21,22 +21,6 @@ class FramesController < BaseController
     haml :'frames/edit'
   end
 
-  auth_post '/frames/:id' do
-    frame = Frame.find id: params['id']
-
-    data = {
-      processor: params['processor'],
-      options: params['options']
-    }
-
-    frame.update(**data)
-    frame.save
-
-    flash[:info] = "Successfully updated frame"
-
-    redirect to("/stacks/#{ frame.stack_id }")
-  end
-
   auth_post '/frames/:id/move_down' do
     frame = Frame.find id: params['id']
 
@@ -53,6 +37,22 @@ class FramesController < BaseController
     frame.move_up
 
     flash[:info] = "Successfully moved frame up"
+
+    redirect to("/stacks/#{ frame.stack_id }")
+  end
+
+  auth_post '/frames/:id' do
+    frame = Frame.find id: params['id']
+
+    data = {
+      processor: params['processor'],
+      options: params['options']
+    }
+
+    frame.update(**data)
+    frame.save
+
+    flash[:info] = "Successfully updated frame"
 
     redirect to("/stacks/#{ frame.stack_id }")
   end

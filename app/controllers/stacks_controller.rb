@@ -5,10 +5,34 @@ class StacksController < BaseController
     haml :'stacks/index'
   end
 
+  auth_post '/stacks' do
+    stack = current_user.add_stack name: params['name']
+
+    redirect to("/stacks/#{ stack.id }")
+  end
+
   auth_get '/stacks/:id' do
     @stack = StackPresenter.new Stack.find(id: params['id'])
 
     haml :'stacks/view'
+  end
+
+  auth_get '/stacks/:id/edit' do
+    @stack = StackPresenter.new Stack.find(id: params['id'])
+
+    haml :'stacks/edit'
+  end
+
+  auth_post '/stacks/:id' do
+  end
+
+  auth_delete '/stacks/:id' do
+    stack = Stack.find id: params['id']
+    stack.destroy
+
+    flash[:info] = "Successfully destroyed stack"
+
+    redirect to("/stacks")
   end
 
   auth_get '/stacks/:id/frames/new' do

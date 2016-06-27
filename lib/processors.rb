@@ -90,6 +90,8 @@ class Processors
       @options = {}
     end
 
+    # TODO: Handle capturing metadata for things like type stating and such.
+    # required could also be made a metadata entry too?
     def required *args, **opts
       args.each{ |arg| @options[arg] = Option.new true }
       opts.each{ |key, value| @options[key] = Option.new false, value }
