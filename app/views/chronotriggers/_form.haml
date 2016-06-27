@@ -1,62 +1,71 @@
-%form{ method: :post, action: '/chronotriggers' }
+- if chronotrigger.new?
+  - url = '/chronotriggers'
+- else
+  - url = "/chronotriggers/#{ chronotrigger.id }"
+
+%form{ method: :post, action: url }
   %fieldset.form-group
     %label{ for: :stack } Stack
-    - if defined?(current_stack)
-      %p.form-control-static= current_stack.name
-      %input{ type: :hidden, id: :stack, name: :stack, value: current_stack.id }
+    - if chronotrigger.stack
+      %p.form-control-static= chronotrigger.stack.name
+      %input{ type: :hidden, id: :stack, name: :stack, value: chronotrigger.stack.id }
     - else
-      %select.form-control{ id: :stack, name: :stack }
+      %select.form-control{ id: :stack, name: :stack, required: true }
         - stacks.each do |stack|
           %option{ value: stack.id }= stack.name
 
   %fieldset.form-group
     %label{ for: :name } Name
-    %input.form-control{ type: :text, id: :name, name: :name }
+    %input.form-control{ type: :text, id: :name, name: :name, required: true, value: chronotrigger.name }
 
   %fieldset.form-group
     %label{ for: :run_at } Run at Time
-    %input.form-control{ type: :time, id: :run_at, name: :run_at }
+    %input.form-control{ type: :time, id: :run_at, name: :run_at, required: true, value: chronotrigger.run_at }
 
-  %fieldset.form-group
-    %label{ for: :run_at_tz } Timezone
-    %select.form-control{ id: :run_at_tz, name: :run_at_tz }
-      - ActiveSupport::TimeZone.all.each do |tzone|
-        %option{ value: tzone.tzinfo.name, selected: ( tzone.tzinfo.name == 'America/Denver' ) }= tzone.name
+    %fieldset.form-group
+      %label{ for: :run_at_tz } Timezone
+      %select.form-control{ id: :run_at_tz, name: :run_at_tz }
+        - ActiveSupport::TimeZone.all.each do |tzone|
+          %option{ value: tzone.tzinfo.name, selected: ( tzone.tzinfo.name == 'Etc/UTC' ) }= tzone.name
+      %small.text-muted Always use UTC unless you know what you are doing.
 
-  %fieldset.form-group
-    %label{ for: :repeat } Weeks between Repeats
-    %input.form-control{ type: :number, min: 0, value: 1, id: :repeat, name: :repeat }
+    %fieldset.form-group
+      %label{ for: :repeat } Weeks between Repeats
+      %input.form-control{ type: :number, min: 0, id: :repeat, name: :repeat, required: true, value: chronotrigger.repeat }
 
-  %fieldset.form-group
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :sunday }
-        Sunday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :monday, checked: true }
-        Monday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :tuesday, checked: true }
-        Tuesday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :wednesday, checked: true }
-        Wednesday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :thursday, checked: true }
-        Thursday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :friday, checked: true }
-        Friday
-    .checkbox
-      %label
-        %input{ type: :checkbox, name: 'day_mask[]', value: :saturday }
-        Saturday
+    %fieldset.form-group
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :sunday, checked: (chronotrigger.day_mask.chars[0] == '1') }
+          Sunday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :monday, checked: (chronotrigger.day_mask.chars[1] == '1') }
+          Monday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :tuesday, checked: (chronotrigger.day_mask.chars[2] == '1') }
+          Tuesday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :wednesday, checked: (chronotrigger.day_mask.chars[3] == '1') }
+          Wednesday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :thursday, checked: (chronotrigger.day_mask.chars[4] == '1') }
+          Thursday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :friday, checked: (chronotrigger.day_mask.chars[5] == '1') }
+          Friday
+      .checkbox
+        %label
+          %input{ type: :checkbox, name: 'day_mask[]', value: :saturday, checked: (chronotrigger.day_mask.chars[6] == '1') }
+          Saturday
 
-  %fieldset.form-group
-    %button.btn.btn-primary.btn-block{ type: 'submit' }
-      Create
+    %fieldset.form-group
+      %button.btn.btn-primary.btn-block{ type: 'submit' }
+        - if chronotrigger.new?
+          Create
+        - else
+          Update

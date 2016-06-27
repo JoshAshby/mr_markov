@@ -22,7 +22,7 @@
         %td= chronotrigger.event.to_json
         %td
           .btn-group
-            %a.btn.btn-primary-outline{ href: "/chronotriggers/#{ chronotrigger.id }" }
+            %a.btn.btn-primary-outline{ href: "/chronotriggers/#{ chronotrigger.id }/edit" }
               Edit
           %a.btn.btn-danger-outline{ href: "/chronotriggers/#{ chronotrigger.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this trigger?' } }
             Delete

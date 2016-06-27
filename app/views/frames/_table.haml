@@ -1,0 +1,18 @@
+%table.table.table-hover
+  %thead.thead-inverse
+    %tr
+      %th Order
+      %th Processor Name
+      %th Actions
+
+  %tbody
+    - frames.each do |frame|
+      %tr
+        %td= frame.position
+        %td= frame.processor.capitalize
+        %td
+          .btn-group
+            %a.btn.btn-primary-outline{ href: "/frames/#{ frame.id }/edit" }
+              Edit
+          %a.btn.btn-danger-outline{ href: "/frames/#{ frame.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this frame?' } }
+            Delete

@@ -13,7 +13,6 @@ class ChronotriggersController < BaseController
     }
 
     stack = Stack.find id: params['stack']
-
     stack.add_chronotrigger(**data)
 
     flash[:info] = "Successfully created chronotrigger"
@@ -21,8 +20,37 @@ class ChronotriggersController < BaseController
     redirect to("/stacks/#{ stack.id }")
   end
 
+  auth_get '/chronotriggers/:id/edit' do
+    @chronotrigger = Chronotrigger.find id: params['id']
+
+    haml :'chronotriggers/edit'
+  end
+
+  auth_post '/chronotriggers/:id' do
+    trigger = Chronotrigger.find id: params['id']
+
+    run_at_time = build_utc_time params['run_at'], params['run_at_tz']
+
+    day_mask = build_day_mask params['day_mask']
+
+    data = {
+      run_at: run_at_time,
+      day_mask: day_mask,
+      repeat: params['repeat'].to_i,
+      name: params['name'],
+      event: {}
+    }
+
+    trigger.update(**data)
+    trigger.save
+
+    flash[:info] = "Successfully updated chronotrigger"
+
+    redirect to("/stacks/#{ trigger.stack_id }")
+  end
+
   auth_delete '/chronotriggers/:id' do
-    trigger = Chronotrigger.find(id: params['id'])
+    trigger = Chronotrigger.find id: params['id']
     trigger.destroy
 
     flash[:info] = "Successfully destroyed chronotrigger"

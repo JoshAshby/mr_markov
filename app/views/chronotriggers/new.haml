@@ -5,11 +5,11 @@
   %h1 New Chronotrigger
   %p.lead
     For Stack:
-    %a{ href: "/stacks/#{ @stack.id }" } #{ @stack.name }
+    %a{ href: "/stacks/#{ @chronotrigger.stack.id }" } #{ @chronotrigger.stack.name }
 
 - content_for :body do
   .container
     .row
       .col-xs-4
       .col-xs-4
-        = partial 'chronotriggers/form', locals: { stacks: @stacks, current_stack: @stack }
+        = partial 'chronotriggers/form', locals: { chronotrigger: @chronotrigger }

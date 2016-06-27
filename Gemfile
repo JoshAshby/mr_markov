@@ -74,6 +74,8 @@ gem 'celluloid', require: 'celluloid/current'
 gem 'sinatra', require: false
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
+gem 'better_errors'
+gem 'binding_of_caller'
 gem 'haml'
 gem 'liquid'
 # gem 'opal'

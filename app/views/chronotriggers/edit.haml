@@ -1,0 +1,15 @@
+- content_for :title do
+  Edit Chronotrigger
+
+- content_for :header do
+  %h1 Editing Chronotrigger: #{ @chronotrigger.name }
+  %p.lead
+    For Stack:
+    %a{ href: "/stacks/#{ @chronotrigger.stack.id }" }= @chronotrigger.stack.name
+
+- content_for :body do
+  .container
+    .row
+      .col-xs-4
+      .col-xs-4
+        = partial 'chronotriggers/form', locals: { chronotrigger: @chronotrigger }

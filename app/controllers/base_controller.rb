@@ -25,6 +25,11 @@ class BaseController < Sinatra::Base
     use ::Rack::MethodOverride # Allows the use of ujs and data-methods on links
   end
 
+  configure :development do
+    use BetterErrors::Middleware
+    BetterErrors.application_root = AshFrame.root.to_s
+  end
+
   before do
     env["rack.errors"] = error_logger
   end

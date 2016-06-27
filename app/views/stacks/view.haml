@@ -2,17 +2,31 @@
   Stack ##{ @stack.id }
 
 - content_for :header do
-  %h1= @stack.name
-  %p.lead Stack ##{ @stack.id }
+  %h1 Stack: #{ @stack.name }
 
 - content_for :body do
   .container
-    %h1 Chronotriggers
-    %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
-      New
+    .navbar.navbar-light.bg-faded
+      %h1.navbar-brand Frames
+      %ul.nav.navbar-nav.pull-xs-right
+        %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/frames/new" }
+          New
+
+    - if @stack.frames.any?
+      = partial 'frames/table', locals: { frames: @stack.frames_dataset.order_by(:position) }
+    - else
+      %p
+        This stack has no frames yet
+
+
+    .navbar.navbar-light.bg-faded
+      %h1.navbar-brand Chronotriggers
+      %ul.nav.navbar-nav.pull-xs-right
+        %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
+          New
 
     - if @stack.chronotriggers.any?
-      = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers }
+      = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers_dataset.order_by(:run_at).map{ |c| ChronotriggerPresenter.new c } }
     - else
       %p
         This stack has no chronotriggers yet

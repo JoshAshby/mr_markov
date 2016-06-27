@@ -12,9 +12,9 @@ class StacksController < BaseController
   end
 
   auth_get '/stacks/:id/chronotriggers/new' do
-    @stack  = StackPresenter.new Stack.find(id: params['id'])
-    @stacks = current_user.stacks.map{ |s| StackPresenter.new s }
+    @stack = StackPresenter.new Stack.find(id: params['id'])
+    @chronotrigger = Chronotrigger.new stack: @stack, day_mask: '0111110', repeat: 1, run_at: '00:00'
 
-    haml :'stacks/new_chronotrigger'
+    haml :'chronotriggers/new'
   end
 end
