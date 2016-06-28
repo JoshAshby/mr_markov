@@ -26,8 +26,8 @@
       %label{ for: :run_at_tz } Timezone
       %select.form-control{ id: :run_at_tz, name: :run_at_tz }
         - ActiveSupport::TimeZone.all.each do |tzone|
-          %option{ value: tzone.tzinfo.name, selected: ( tzone.tzinfo.name == tzname || 'Etc/UTC' ) }= tzone.name
-      %small.text-muted Always use UTC unless you know what you are doing.
+          %option{ value: tzone.tzinfo.name, selected: (tzone.tzinfo.name == tzname) }= tzone.name
+      %small.text-muted Detected timezone: #{ tzname }.
 
     %fieldset.form-group
       %label{ for: :repeat } Weeks between Repeats
