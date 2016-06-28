@@ -6,20 +6,18 @@
       %th Runs on Days
       %th Repeats
       %th Last Ran
-      %th Event
       %th Actions
 
   %tbody
     - chronotriggers.each do |chronotrigger|
       %tr
         %td= chronotrigger.name
-        %td= chronotrigger.run_at
+        %td.utc-time= chronotrigger.run_at
         %td= chronotrigger.day_mask
         %td
           = chronotrigger.repeat
           = 'Week'.pluralize(chronotrigger.repeat)
         %td= chronotrigger.last_ran
-        %td= chronotrigger.event.to_json.truncate(80)
         %td
           %a.btn.btn-primary-outline{ href: "/chronotriggers/#{ chronotrigger.id }/edit" }
             Edit

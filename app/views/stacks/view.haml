@@ -6,26 +6,37 @@
 
 - content_for :body do
   .container
-    .navbar.navbar-light.bg-faded
-      %h1.navbar-brand Frames
-      %ul.nav.navbar-nav.pull-xs-right
-        %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/frames/new" }
-          New
+    %ul.nav.nav-tabs
+      %li.nav-item
+        %a.nav-link.active{ data: { toggle: 'tab' }, href: '#frames' }
+          Frames
+      %li.nav-item
+        %a.nav-link{ data: { toggle: 'tab' }, href: '#chronotriggers' }
+          Chronotriggers
 
-    - if @stack.frames.any?
-      = partial 'frames/table', locals: { frames: @stack.frames_dataset.order_by(:position) }
-    - else
-      %p
-        This stack has no frames yet
+    .tab-content
+      .tab-pane.active#frames
+        .navbar.navbar-light.bg-faded
+          %h1.navbar-brand Frames
+          %ul.nav.navbar-nav.pull-xs-right
+            %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/frames/new" }
+              New
 
-    .navbar.navbar-light.bg-faded
-      %h1.navbar-brand Chronotriggers
-      %ul.nav.navbar-nav.pull-xs-right
-        %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
-          New
+        - if @stack.frames.any?
+          = partial 'frames/table', locals: { frames: @stack.frames_dataset.order_by(:position) }
+        - else
+          %p
+            This stack has no frames yet
 
-    - if @stack.chronotriggers.any?
-      = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers_dataset.order_by(:run_at).map{ |c| ChronotriggerPresenter.new c } }
-    - else
-      %p
-        This stack has no chronotriggers yet
+      .tab-pane#chronotriggers
+        .navbar.navbar-light.bg-faded
+          %h1.navbar-brand Chronotriggers
+          %ul.nav.navbar-nav.pull-xs-right
+            %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
+              New
+
+        - if @stack.chronotriggers.any?
+          = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers_dataset.order_by(:run_at).map{ |c| ChronotriggerPresenter.new c } }
+        - else
+          %p
+            This stack has no chronotriggers yet

@@ -8,9 +8,12 @@ class RunActiveChronotriggersWorker < AshFrame::Worker
   def perform
     MrMarkov.logger.debug "Loading chronotriggers ..."
 
-    chronotriggers = Chronotrigger.active.to_a.select(&:should_run?)
+    Chronotrigger.active.to_a.each do |chronotrigger|
+      unless chronotrigger.should_run?
+        MrMarkov.logger.debug "Not running chronotrigger #{ chronotrigger.id } because its should_run? returned false"
+        next
+      end
 
-    chronotriggers.each do |chronotrigger|
       MrMarkov.logger.debug "Running chronotrigger #{ chronotrigger.id }"
 
       RunStackBlock[ stack: chronotrigger.stack, event: chronotrigger.event ]
