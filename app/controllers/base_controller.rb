@@ -20,6 +20,7 @@ class BaseController < Sinatra::Base
 
   use Rack::CommonLogger, access_logger
   use Rack::MethodOverride # Allows the use of ujs and data-methods on links
+  use Rack::TimeZone
 
   configure :development do
     use BetterErrors::Middleware
@@ -28,11 +29,14 @@ class BaseController < Sinatra::Base
 
   before do
     env["rack.errors"] = error_logger
+
+    @timezone = cookies["tzname"] ? ActiveSupport::TimeZone[ cookies["tzname"] ] : ActiveSupport::TimeZone[ 'Etc/UTC' ]
+    @tzname   = @timezone ? @timezone.tzinfo.name : 'Etc/UTC'
   end
 
   set :session_secret, ENV['SESSION_SECRET']
 
-  helpers Sinatra::ContentFor, AuthenticationHelper, PartialHelper
+  helpers Sinatra::ContentFor, Sinatra::Cookies, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
 
   def authenticate!

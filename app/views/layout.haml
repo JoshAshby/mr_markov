@@ -34,13 +34,19 @@
 
   :javascript
     $(document).ready(function() {
-      var zone = moment.tz.guess()
+      var tzName = moment.tz.guess()
+
       $(".utc-time").each(function(idx, node) {
-        node = $(node)
-        var rawTime = node.text()
-        var momentTime = moment.utc(rawTime, 'HH:mm:ss')
-        node.text(moment.tz(momentTime, zone).format('HH:mm:ss z'))
+        jnode          = $(node)
+
+        var rawTime    = jnode.text()
+        var momentTime = moment.utc(rawTime, 'HH:mm:ss').tz(tzName)
+        var localTime  = momentTime.format('hh:mm A z')
+
+        jnode.text(localTime)
       })
+
+      document.cookie = "tzname="+tzName+"; expires="+moment.utc().add(1, 'hour').toDate().toGMTString();+"; path=/";
     })
 
   - if content_for? :javascript
