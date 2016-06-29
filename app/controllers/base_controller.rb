@@ -30,8 +30,7 @@ class BaseController < Sinatra::Base
   before do
     env["rack.errors"] = error_logger
 
-    @timezone = cookies["tzname"] ? ActiveSupport::TimeZone[ cookies["tzname"] ] : ActiveSupport::TimeZone[ 'Etc/UTC' ]
-    @tzname   = @timezone ? @timezone.tzinfo.name : 'Etc/UTC'
+    @timezone = ActiveSupport::TimeZone[ cookies["tzname"] || 'Etc/UTC' ]
   end
 
   set :session_secret, ENV['SESSION_SECRET']

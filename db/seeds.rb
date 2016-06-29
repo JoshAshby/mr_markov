@@ -2,10 +2,10 @@ users = {
   'ashby' => {
     username: 'ashby',
     password: ENV['ASHBY_USER_PASS'] || 'test',
-    preferences: {
+    profile: {
       email: 'joshashby@joshashby.com'
     },
-    groups: [
+    roles: [
       'admin'
     ]
   }

@@ -3,20 +3,20 @@
 class Processors
   class << self
     def registry
-      @@registery ||= []
+      @@registery ||= {}
     end
 
     def register name, as:
-      registry << [ name, as ]
+      registry[ name ] = as
     end
 
-    def unregister name, as:
-      registry.delete [ name, as ]
+    def unregister name
+      registry.delete name
     end
 
     def get name
       name = name.to_sym
-      registry.find{ |parts| parts[0] == name }[1]
+      registry[name]
     end
   end
 
@@ -32,7 +32,7 @@ class Processors
       end
 
       def unregister
-        Processors.unregister @registered_as, as: self
+        Processors.unregister @registered_as
         @registered_as = nil
       end
 

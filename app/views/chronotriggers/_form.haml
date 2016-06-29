@@ -20,14 +20,14 @@
 
   %fieldset.form-group
     %label{ for: :run_at } Run at Time
-    %input.form-control{ type: :time, id: :run_at, name: :run_at, required: true, value: chronotrigger.run_at }
+    %input.form-control{ type: :time, id: :run_at, name: :run_at, required: true, value: timezone.utc_to_local(chronotrigger.run_at) }
 
     %fieldset.form-group
       %label{ for: :run_at_tz } Timezone
       %select.form-control{ id: :run_at_tz, name: :run_at_tz }
         - ActiveSupport::TimeZone.all.each do |tzone|
-          %option{ value: tzone.tzinfo.name, selected: (tzone.tzinfo.name == tzname) }= tzone.name
-      %small.text-muted Detected timezone: #{ tzname }.
+          %option{ value: tzone.tzinfo.name, selected: (tzone.tzinfo.name == timezone.tzinfo.name) }= tzone.name
+      %small.text-muted Detected timezone: #{ timezone.tzinfo.name }.
 
     %fieldset.form-group
       %label{ for: :repeat } Weeks between Repeats
