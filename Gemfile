@@ -106,6 +106,9 @@ group :test do
   gem 'minitest-reporters'
   gem 'minitest-stub_any_instance'
   gem 'minitest-focus'
-  # gem 'rack-test'
+
+  gem 'rack-test'
+  gem 'webmock'
+
   gem 'simplecov', require: false
 end

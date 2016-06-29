@@ -26,5 +26,10 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require 'minitest/autorun'
 require 'minitest/stub_any_instance'
 
+require 'webmock/minitest'
+
+WebMock.enable!
+WebMock.disable_net_connect!(allow_localhost: true)
+
 require_relative '../mr_markov.rb'
 require_rel 'mocks/', 'helpers/'
