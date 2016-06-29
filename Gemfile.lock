@@ -1,8 +1,8 @@
 GIT
   remote: http://code.isin.space/JoshAshby/AshFrame.git
-  revision: 6bb015266064e6463a537bbfd13ae0ed4182570b
+  revision: c6c8608325371970b22728ede9cfb443f8c739f9
   specs:
-    ash_frame (1.0.0)
+    ash_frame (1.1.0)
 
 GEM
   remote: https://rubygems.org/

@@ -10,10 +10,13 @@ class RunFrameBlock < AshFrame::Block
 
     processor            = frame_processor.new(options: interpolated_options, state: frame.state.to_h, logger: logger)
 
-    begin
-      processor.handle
-    rescue => e
-      logger.error e
+    action, result = catch(:halt) do |tag|
+      begin
+        processor.handle
+      rescue => e
+        logger.error e
+        throw tag, [ :cancel, { error: e } ]
+      end
     end
 
     fail "State is not a hash like object!" unless processor.state.respond_to? :to_h
@@ -21,15 +24,23 @@ class RunFrameBlock < AshFrame::Block
     frame.save
 
     fail "Result is not a hash like object!" unless processor.result.respond_to? :to_h
-    Result.create frame: frame, result: processor.result.to_h
+    Result.create frame: frame, result: result
 
     log_file.rewind
     Log.create frame: frame, log: log_file.read
     log_file.close
 
-    return unless processor.propagate
-
-    processor.result
+    # Flow control is apparently hard?
+    case action
+    when :cancel
+      throw :halt, result
+    when :pass_through
+      event
+    when :merge
+      event.merge(result)
+    else
+      result
+    end
   end
 
   protected

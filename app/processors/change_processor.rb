@@ -16,11 +16,11 @@ class ChangeProcessor < Processors::Base
     logger.debug "Previous value: #{ last }"
     logger.debug "Current value: #{ current }"
 
-    return cancel! options[:on_same] unless current != last
+    cancel! options[:on_same] unless current != last
 
     state['last'] = current
 
-    propagate! options[:on_change]
+    merge! options[:on_change]
   end
 
   protected

@@ -20,7 +20,6 @@ class BaseController < Sinatra::Base
 
   use Rack::CommonLogger, access_logger
   use Rack::MethodOverride # Allows the use of ujs and data-methods on links
-  use Rack::TimeZone
 
   configure :development do
     use BetterErrors::Middleware

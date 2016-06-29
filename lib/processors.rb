@@ -41,12 +41,11 @@ class Processors
       end
     end
 
-    attr_reader :logger, :options, :state, :propagate, :result
+    attr_reader :logger, :options, :state, :result
 
     def initialize(options:, state: {}, logger: nil)
       @logger    = logger || Logger.new(STDOUT)
 
-      @propagate = false
       @state     = state
       @result    = {}
       @options   = {}
@@ -63,13 +62,22 @@ class Processors
     end
 
     def cancel! data={}, **opts
-      @propagate = false
-      @result    = data.merge opts
+      @result = data.merge(opts)
+      throw :halt, [ :cancel, @result ]
     end
 
     def propagate! data={}, **opts
-      @propagate = true
-      @result    = data.merge opts
+      @result = data.merge(opts)
+      throw :halt, [ :propagate, @result ]
+    end
+
+    def merge! data={}, **opts
+      @result = data.merge(opts)
+      throw :halt, [ :merge, @result ]
+    end
+
+    def pass_through!
+      throw :halt, [ :pass_through, nil ]
     end
   end
 

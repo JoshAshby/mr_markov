@@ -12,7 +12,7 @@ class TelegramProcessor < Processors::Base
 
     bot.send_message chat_id: options[:chat_id], text: options[:message]
 
-    propagate!
+    pass_through!
   end
 
   protected
