@@ -8,10 +8,10 @@
   .container
     %ul.nav.nav-tabs
       %li.nav-item
-        %a.nav-link.active{ data: { toggle: 'tab' }, href: '#frames' }
+        %a.nav-link.active{ href: "/stacks/#{ @stack.id }" }
           Frames
       %li.nav-item
-        %a.nav-link{ data: { toggle: 'tab' }, href: '#chronotriggers' }
+        %a.nav-link{ href: "/stacks/#{ @stack.id }/chronotriggers" }
           Chronotriggers
 
     .tab-content
@@ -27,16 +27,3 @@
         - else
           %p
             This stack has no frames yet
-
-      .tab-pane#chronotriggers
-        .navbar.navbar-light.bg-faded
-          %h1.navbar-brand Chronotriggers
-          %ul.nav.navbar-nav.pull-xs-right
-            %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
-              New
-
-        - if @stack.chronotriggers.any?
-          = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers_dataset.order_by(:run_at).map{ |c| ChronotriggerPresenter.new c } }
-        - else
-          %p
-            This stack has no chronotriggers yet

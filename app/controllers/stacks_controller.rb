@@ -11,10 +11,16 @@ class StacksController < BaseController
     redirect to("/stacks/#{ stack.id }")
   end
 
-  auth_get '/stacks/:id' do
+   auth_get '/stacks/:id' do
     @stack = StackPresenter.new Stack.find(id: params['id'])
 
     haml :'stacks/view'
+  end
+
+  auth_get '/stacks/:id/chronotriggers' do
+    @stack = StackPresenter.new Stack.find(id: params['id'])
+
+    haml :'stacks/chronotriggers'
   end
 
   auth_get '/stacks/:id/edit' do
@@ -46,7 +52,7 @@ class StacksController < BaseController
 
   auth_get '/stacks/:id/chronotriggers/new' do
     @stack = StackPresenter.new Stack.find(id: params['id'])
-    @chronotrigger = Chronotrigger.new stack: @stack, day_mask: '0111110', repeat: 1, run_at: '00:00'
+    @chronotrigger = Chronotrigger.new stack: @stack, day_mask: '0111110', repeat: 1, run_at: @timezone.now.utc.strftime('%R')
 
     haml :'chronotriggers/new'
   end

@@ -1,0 +1,29 @@
+- content_for :title do
+  Stack ##{ @stack.id }
+
+- content_for :header do
+  %h1 Stack: #{ @stack.name }
+
+- content_for :body do
+  .container
+    %ul.nav.nav-tabs
+      %li.nav-item
+        %a.nav-link{ href: "/stacks/#{ @stack.id }" }
+          Frames
+      %li.nav-item
+        %a.nav-link.active{ href: "/stacks/#{ @stack.id }/chronotriggers" }
+          Chronotriggers
+
+    .tab-content
+      .tab-pane.active#chronotriggers
+        .navbar.navbar-light.bg-faded
+          %h1.navbar-brand Chronotriggers
+          %ul.nav.navbar-nav.pull-xs-right
+            %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }
+              New
+
+        - if @stack.chronotriggers.any?
+          = partial 'chronotriggers/table', locals: { chronotriggers: @stack.chronotriggers_dataset.order_by(:run_at).map{ |c| ChronotriggerPresenter.new c } }
+        - else
+          %p
+            This stack has no chronotriggers yet

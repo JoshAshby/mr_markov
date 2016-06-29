@@ -18,7 +18,7 @@ class ChronotriggersController < BaseController
     flash[:info] = "Successfully created chronotrigger"
     log "Created chronotrigger #{ trigger.id }"
 
-    redirect to("/stacks/#{ stack.id }")
+    redirect to("/stacks/#{ stack.id }/chronotriggers")
   end
 
   auth_get '/chronotriggers/:id/edit' do
@@ -48,7 +48,7 @@ class ChronotriggersController < BaseController
     flash[:info] = "Successfully updated chronotrigger"
     log "Updated chronotrigger #{ trigger.id }"
 
-    redirect to("/stacks/#{ trigger.stack_id }")
+    redirect to("/stacks/#{ trigger.stack_id }/chronotriggers")
   end
 
   auth_delete '/chronotriggers/:id' do
@@ -58,7 +58,7 @@ class ChronotriggersController < BaseController
     flash[:info] = "Successfully destroyed chronotrigger"
     log "Destroy chronotrigger #{ trigger.id }"
 
-    redirect to("/stacks/#{ trigger.stack_id }")
+    redirect to("/stacks/#{ trigger.stack_id }/chronotriggers")
   end
 
   protected
