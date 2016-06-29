@@ -7,7 +7,7 @@ class FramesController < BaseController
       options: params['options']
     }
 
-    stack.add_frame(**data)
+    frame = stack.add_frame(**data)
 
     flash[:info] = "Successfully created frame"
     log "Createdd frame #{ frame.id }"

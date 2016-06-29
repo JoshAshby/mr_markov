@@ -2,7 +2,7 @@
   Edit Frame
 
 - content_for :header do
-  %h1 Editing Frame: ##{ @frame.id } - #{ @frame.processor.capitalize }
+  %h1 Editing Frame: #{ @frame.processor.capitalize }
   %p.lead
     For Stack:
     %a{ href: "/stacks/#{ @frame.stack.id }" }= @frame.stack.name

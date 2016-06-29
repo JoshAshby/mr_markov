@@ -1,0 +1,12 @@
+- content_for :title do
+  Edit Stack
+
+- content_for :header do
+  %h1 Editing Stack #{ @stack.name }
+
+- content_for :body do
+  .container
+    .row
+      .col-xs-4
+      .col-xs-4
+        = partial 'stacks/form', locals: { stack: @stack }

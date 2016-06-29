@@ -6,6 +6,15 @@
 
 - content_for :body do
   .container
+    .navbar.navbar-full.navbar-light.bg-faded
+      %ul.nav.navbar-nav.pull-xs-right
+        %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/edit" }
+          Edit
+        %a.btn.btn-danger-outline{ href: "/stacks/#{ @stack.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this stack?' } }
+          Delete
+
+    %br
+
     %ul.nav.nav-tabs
       %li.nav-item
         %a.nav-link{ href: "/stacks/#{ @stack.id }" }
@@ -16,7 +25,7 @@
 
     .tab-content
       .tab-pane.active#chronotriggers
-        .navbar.navbar-light.bg-faded
+        .navbar.navbar-full.navbar-light.bg-faded
           %h1.navbar-brand Chronotriggers
           %ul.nav.navbar-nav.pull-xs-right
             %a.btn.btn-primary-outline{ href: "/stacks/#{ @stack.id }/chronotriggers/new" }

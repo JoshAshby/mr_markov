@@ -83,6 +83,6 @@ class BaseController < Sinatra::Base
   end
 
   def log message, level: :info
-    MrMarkov.logger.send level, "[#{ logged_in? ? current_user : 'anonymous' }] - #{ message }"
+    MrMarkov.logger.send level, "[#{ logged_in? ? current_user.id : 'anonymous' }] - #{ message }"
   end
 end

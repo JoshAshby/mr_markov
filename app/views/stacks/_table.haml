@@ -1,0 +1,17 @@
+%table.table.table-hover
+  %thead.thead-inverse
+    %tr
+      %th Name
+      %th Actions
+
+  %tbody
+    - stacks.each do |stack|
+      %tr
+        %td
+          %a{ href: "/stacks/#{ stack.id }" }
+            = stack.name
+        %td
+          %a.btn.btn-primary-outline{ href: "/stacks/#{ stack.id }/edit" }
+            Edit
+          %a.btn.btn-danger-outline{ href: "/stacks/#{ stack.id }", data: { method: 'delete', confirm: 'Are you sure you want to delete this stack?' } }
+            Delete

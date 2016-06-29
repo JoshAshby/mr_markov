@@ -8,6 +8,9 @@ class StacksController < BaseController
   auth_post '/stacks' do
     stack = current_user.add_stack name: params['name']
 
+    flash[:info] = "Successfully created stack"
+    log "Created stack #{ stack.id }"
+
     redirect to("/stacks/#{ stack.id }")
   end
 
@@ -30,6 +33,13 @@ class StacksController < BaseController
   end
 
   auth_post '/stacks/:id' do
+    stack = Stack.find id: params['id']
+    stack.update name: params['name']
+
+    flash[:info] = "Successfully updated stack"
+    log "Updated stack #{ stack.id }"
+
+    redirect to("/stacks/#{ stack.id }")
   end
 
   auth_delete '/stacks/:id' do

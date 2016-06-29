@@ -6,8 +6,14 @@
 
 - content_for :body do
   .container
-    .card-columns
-      - @stacks.each do |stack|
-        .card.card-block
-          %h3.card-title= stack.name
-          %a.card-link{ href: "/stacks/#{ stack.id }" } Inspect
+    .navbar.navbar-full.navbar-light.bg-faded
+      %h1.navbar-brand Stacks
+      %ul.nav.navbar-nav.pull-xs-right
+        %a.btn.btn-primary-outline{ href: "/stacks/new" }
+          New
+
+    - if @stacks.any?
+      = partial 'stacks/table', locals: { stacks: @stacks }
+    - else
+      %p
+        You have no stacks yet!

@@ -1,0 +1,16 @@
+- if stack.new?
+  - url = '/stacks'
+- else
+  - url = "/stacks/#{ stack.id }"
+
+%form{ method: :post, action: url }
+  %fieldset.form-group
+    %label{ for: :name } Name
+    %input.form-control{ type: :text, id: :name, name: :name, required: true, value: stack.name }
+
+  %fieldset.form-group
+    %button.btn.btn-primary.btn-block{ type: 'submit' }
+      - if stack.new?
+        Create
+      - else
+        Update
