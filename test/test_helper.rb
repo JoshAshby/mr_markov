@@ -15,6 +15,34 @@ if ENV['COVERAGE']
     coverage_dir File.join(ENV['BUILD_ARTIFACTS'], "coverage") if ENV['BUILD_ARTIFACTS']
 
     command_name 'Minitest'
+
+    add_group 'Processors' do |file|
+      file.filename =~ /\/processors/
+    end
+
+    add_group 'Blocks' do |file|
+      file.filename =~/\/blocks/
+    end
+
+    add_group 'Models' do |file|
+      file.filename =~ /\/models/
+    end
+
+    add_group 'Controllers' do |file|
+      file.filename =~ /\/controllers/
+    end
+
+    add_group 'Workers' do |file|
+      file.filename =~ /\/workers/
+    end
+
+    add_group 'Helpers' do |file|
+      file.filename =~/\/helpers/
+    end
+
+    add_group 'Presenters' do |file|
+      file.filename =~/\/presenters/
+    end
   end
 end
 

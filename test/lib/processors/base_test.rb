@@ -116,6 +116,7 @@ class ProcessorsBaseTest < MiniTest::Test
     assert processor.options[:sample] = :test
   end
 
+  # And now onto the flow control methods
   def test_cancel_empty
     processor_klass = Class.new(Processors::Base) do
       def handle
