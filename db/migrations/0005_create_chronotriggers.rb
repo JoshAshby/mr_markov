@@ -10,6 +10,8 @@ Sequel.migration do
       column :last_ran, :date
       column :run_at,   :time, null: false, index: true
 
+      String :timezone, null: false, default: 'Etc/UTC'
+
       bit      :day_mask, size: 7, default: '0000000'
       Integer  :repeat,            default: 0
 

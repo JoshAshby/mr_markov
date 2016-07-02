@@ -16,9 +16,11 @@ class Processors
       @options ||= {}
     end
 
+    private
+
     def setup_options! raw
       self.class.options.each do |name, settings|
-        if  settings.required && ! raw.has_key?(name.to_s)
+        if settings.required && ! raw.has_key?(name.to_s)
           fail ArgumentError, "Invalid options: #{ name } is required but missing"
         end
 
@@ -28,10 +30,8 @@ class Processors
       end
     end
 
-    protected
-
     class DSL
-      Option = Struct.new :required, :default
+      Option = Struct.new :required, :default, :meta
 
       attr_reader :options
 

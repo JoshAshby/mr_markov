@@ -5,8 +5,6 @@ class Frame < Sequel::Model
   plugin :list, scope: :stack_id
 
   many_to_one :stack
-  one_to_many :results
-  one_to_many :logs
 
   def validate
     super

@@ -26,7 +26,10 @@ class WebsiteProcessor < Processors::Base
   def handle
     response = faraday.send options[:verb].to_sym, options[:url], options[:body]
 
-    logger.error "Did not get a successful status code!" and return unless options[:success_codes].include? response.status
+    unless options[:success_codes].include? response.status
+      logger.error "Did not get a successful status code: #{ response.status }"
+      cancel!
+    end
 
     propagate!({
       status: response.status,

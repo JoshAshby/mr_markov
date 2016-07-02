@@ -1,10 +1,11 @@
 Sequel.migration do
   change do
-    create_table :logs do
+    create_table :stack_runs do
       primary_key :id
 
-      foreign_key :frame_id, :frames, index: true
+      foreign_key :stack_id, :stacks, index: true
 
+      column :result, :jsonb
       String :log
 
       DateTime :created_at

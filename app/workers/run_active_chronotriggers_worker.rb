@@ -1,14 +1,14 @@
 class RunActiveChronotriggersWorker < AshFrame::Worker
-  include Celluloid
+  # include Celluloid
 
-  set_asyncer do |packet|
-    self.new.async.work packet
-  end
+  # set_asyncer do |packet|
+    # self.new.async.work packet
+  # end
 
   def perform
     MrMarkov.logger.debug "Loading chronotriggers ..."
 
-    Chronotrigger.active.to_a.each do |chronotrigger|
+    Chronotrigger.dataset.order(:id).each do |chronotrigger|
       unless chronotrigger.should_run?
         MrMarkov.logger.debug "Not running chronotrigger #{ chronotrigger.id } because its should_run? returned false"
         next
@@ -18,7 +18,7 @@ class RunActiveChronotriggersWorker < AshFrame::Worker
 
       RunStackBlock[ stack: chronotrigger.stack, event: chronotrigger.event ]
 
-      chronotrigger.update last_ran: Date.current
+      chronotrigger.ran!
       chronotrigger.save
     end
   end

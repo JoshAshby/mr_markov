@@ -12,6 +12,8 @@ database_args = [
 # Setup our SQL database for things
 DB = Sequel.connect(*database_args)
 
+DB.optimize_model_load = true
+
 DB.extension :pagination
 
 Sequel::Model.db = DB
@@ -20,6 +22,7 @@ Sequel.default_timezone = :utc
 
 DB.extension :pg_array, :pg_json, :pg_enum
 DB.extension :pagination
+DB.extension :pg_streaming
 
 Sequel::Model.plugin :update_or_create
 

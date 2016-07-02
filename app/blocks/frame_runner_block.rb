@@ -1,10 +1,7 @@
 class RunFrameBlock < AshFrame::Block
-  require :frame, :event
+  require :frame, :event, :logger
 
   def logic
-    log_file             = StringIO.new
-    logger               = Logger.new log_file
-
     frame_processor      = Processors.get frame.processor
     interpolated_options = interpolate frame.options, using: event
 
@@ -22,13 +19,6 @@ class RunFrameBlock < AshFrame::Block
     fail "State is not a hash like object!" unless processor.state.respond_to? :to_h
     frame.update state: processor.state.to_h
     frame.save
-
-    fail "Result is not a hash like object!" unless processor.result.respond_to? :to_h
-    Result.create frame: frame, result: result
-
-    log_file.rewind
-    Log.create frame: frame, log: log_file.read
-    log_file.close
 
     # Flow control is apparently hard?
     case action

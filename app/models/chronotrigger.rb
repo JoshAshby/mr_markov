@@ -10,17 +10,22 @@ class Chronotrigger < Sequel::Model
     validates_presence [ :stack_id, :name, :run_at ]
   end
 
-  subset :active do
-    "(day_mask & B'#{ Chronotrigger.current_day_mask }')::integer != 0 AND run_at < '#{ Time.current.strftime('%T') }' AND (last_ran != '#{ Time.current.strftime('%F') }' OR last_ran IS NULL)"
-  end
-
   def should_run?
     return true if last_ran.nil?
 
-    days_difference  = (last_ran.beginning_of_week - Date.current.beginning_of_week).abs.floor
+    current_timezone = ActiveSupport::TimeZone[ timezone ]
+    current_datetime = Time.current.in_time_zone current_timezone
+
+    MrMarkov.logger.debug "Chronotrigger #{ id }: current time: #{ current_datetime } and last ran #{ last_ran } and run at #{ run_at }"
+
+    return false if day_mask.chars[ current_datetime.wday ] == "0"
+    return false if run_at.strftime('%T') > current_datetime.strftime('%T')
+    return false if last_ran == current_datetime.to_date
+
+    days_difference  = (last_ran.beginning_of_week - current_datetime.beginning_of_week.to_date).abs.floor
     weeks_difference = days_difference / 7
 
-    MrMarkov.logger.debug "Chronotrigger #{ id } has days_difference #{ days_difference } and week_difference #{ weeks_difference } and repeat #{ repeat }"
+    MrMarkov.logger.debug "Chronotrigger #{ id }: days difference #{ days_difference } and week difference #{ weeks_difference } and week repeat #{ repeat }"
 
     return true  if weeks_difference == 0
     return false if weeks_difference > 0 && repeat == 0
@@ -29,9 +34,10 @@ class Chronotrigger < Sequel::Model
     true
   end
 
-  def self.current_day_mask
-    day_mask = [].fill(0, 0, 7)
-    day_mask[Date.current.wday] = 1
-    day_mask.join
+  def ran!
+    current_timezone = ActiveSupport::TimeZone[ timezone ]
+    current_datetime = Time.current.in_time_zone current_timezone
+
+    update last_ran: current_datetime.to_date
   end
 end

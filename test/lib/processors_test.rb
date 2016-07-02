@@ -10,26 +10,34 @@ class ProcessorsTest < MiniTest::Test
   end
 
   def test_register
-    fake_thing = -> (v) { next }
+    fake_processor = Class.new(Processors::Base)
 
-    assert Processors.register(:test, as: fake_thing)
+    assert Processors.register(:test, as: fake_processor)
+  end
+
+  def test_invalid_register
+    fake_processor = Class.new
+
+    assert_raises ArgumentError do
+      Processors.register(:test, as: fake_processor)
+    end
   end
 
   def test_unregister
-    fake_thing = -> (v) { next }
+    fake_processor = Class.new(Processors::Base)
 
-    Processors.register(:test, as: fake_thing)
+    Processors.register(:test, as: fake_processor)
     assert Processors.unregister(:test)
   end
 
   def test_get
-    fake_thing = -> (v) { next }
+    fake_processor = Class.new(Processors::Base)
 
-    assert Processors.register(:test, as: fake_thing)
+    assert Processors.register(:test, as: fake_processor)
 
     res = Processors.get(:test)
     assert res
-    assert_equal fake_thing, res
+    assert_equal fake_processor, res
 
     assert Processors.unregister(:test)
     refute Processors.get(:test)

@@ -3,16 +3,15 @@ class Processors
     extend ActiveSupport::Concern
 
     class_methods do
-      def meta
-        @meta ||= {}
-      end
-
       def meta_options *required, **optional, &block
-        @meta = DSL.call(*required, **optional, &block)
+        metas = DSL.call(*required, **optional, &block)
+        metas.each do |key, meta|
+          options[key].meta = meta
+        end
       end
     end
 
-    protected
+    private
 
     class DSL
       attr_reader :meta

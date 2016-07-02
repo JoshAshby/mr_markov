@@ -4,6 +4,7 @@ class Stack < Sequel::Model
   plugin :validation_helpers
 
   many_to_one :user
+  one_to_many :stack_runs
   one_to_many :frames
   one_to_many :chronotriggers
 
