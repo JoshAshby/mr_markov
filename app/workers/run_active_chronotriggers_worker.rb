@@ -1,9 +1,9 @@
 class RunActiveChronotriggersWorker < AshFrame::Worker
-  # include Celluloid
+  include Celluloid
 
-  # set_asyncer do |packet|
-    # self.new.async.work packet
-  # end
+  set_asyncer do |packet|
+    self.new.async.work packet
+  end
 
   def perform
     MrMarkov.logger.debug "Loading chronotriggers ..."
