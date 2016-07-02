@@ -21,7 +21,8 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        run_at: '8:00am MST',
+        run_at: '8:00am',
+        timezone: 'America/Denver',
         day_mask: '0101010',
         repeat: 1
       }
@@ -68,37 +69,43 @@ end
     triggers: [
       {
         type: :chronotrigger,
-        run_at: '6:00am MST',
+        run_at: '6:00am',
+        timezone: 'America/Denver',
         day_mask: '0111110',
         repeat: 1
       },
       {
         type: :chronotrigger,
-        run_at: '8:00am MST',
+        run_at: '8:00am',
+        timezone: 'America/Denver',
         day_mask: '1111111',
         repeat: 1
       },
       {
         type: :chronotrigger,
-        run_at: '10:00am MST',
+        run_at: '10:00am',
+        timezone: 'America/Denver',
         day_mask: '1111111',
         repeat: 1
       },
       {
         type: :chronotrigger,
-        run_at: '12:00pm MST',
+        run_at: '12:00pm',
+        timezone: 'America/Denver',
         day_mask: '0111110',
         repeat: 1
       },
       {
         type: :chronotrigger,
-        run_at: '2:00pm MST',
+        run_at: '2:00pm',
+        timezone: 'America/Denver',
         day_mask: '1111111',
         repeat: 1
       },
       {
         type: :chronotrigger,
-        run_at: '4:00pm MST',
+        run_at: '4:00pm',
+        timezone: 'America/Denver',
         day_mask: '0111110',
         repeat: 1
       }
@@ -188,7 +195,8 @@ Summary: {{ summary[0] }}"
                               event: {},
                               run_at: trigger[:run_at],
                               day_mask: trigger[:day_mask],
-                              repeat: trigger[:repeat]
+                              repeat: trigger[:repeat],
+                              timezone: trigger[:timezone]
 
     end
   end
