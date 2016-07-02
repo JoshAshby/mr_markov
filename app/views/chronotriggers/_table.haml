@@ -3,6 +3,7 @@
     %tr
       %th Name
       %th Runs at Time
+      %th Timezone
       %th Runs on Days
       %th Repeats
       %th Last Ran
@@ -12,7 +13,8 @@
     - chronotriggers.each do |chronotrigger|
       %tr
         %td= chronotrigger.name
-        %td.utc-time= chronotrigger.run_at
+        %td= chronotrigger.run_at
+        %td= chronotrigger.timezone
         %td= chronotrigger.day_mask
         %td
           = chronotrigger.repeat
