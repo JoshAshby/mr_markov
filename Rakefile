@@ -35,11 +35,11 @@ end
 YARD::Rake::YardocTask.new do |t|
   t.files = ['app/**/*.rb', 'lib/**/*.rb', 'test/helpers/**/*.rb', 'test/mocks/**/*.rb', 'mr_markov.rb']
 
-  options = [ '-', 'README.md' ]
+  options = [  '--no-private', '--charset', 'utf-8', '--markup', 'markdown', '--readme', 'README.md' ]
   options.unshift '--output-dir', File.join(ENV['BUILD_ARTIFACTS'] || './', 'docs')
 
   t.options = options
 
-  # t.stats_options = ['--list-undoc']
+  t.stats_options = ['--list-undoc']
 end
 

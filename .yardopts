@@ -1,0 +1,9 @@
+--no-private
+--charset utf-8
+--markup markdown
+--output-dir ./docs
+lib/**/*.rb
+app/**/*.rb
+test/helpers/**/*.rb
+test/mocks/**/*.rb
+--readme README.md

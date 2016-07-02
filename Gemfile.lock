@@ -87,6 +87,9 @@ GEM
     guard-minitest (2.4.5)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    guard-yard (2.1.4)
+      guard (>= 1.1.0)
+      yard (>= 0.7.0)
     haml (4.0.7)
       tilt
     hashdiff (0.3.0)
@@ -129,6 +132,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     rack (1.6.4)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
@@ -223,6 +229,7 @@ DEPENDENCIES
   globalid
   guard
   guard-minitest
+  guard-yard
   haml
   hiredis
   jsonpath
@@ -233,6 +240,8 @@ DEPENDENCIES
   minitest-stub_any_instance
   nokogiri
   pg
+  pry
+  pry-byebug
   rack-contrib
   rack-test
   rake

@@ -1,5 +1,4 @@
 class AuthenticationController < BaseController
-  # Session handling
   get '/login' do
     return haml :login unless logged_in?
 
@@ -34,8 +33,4 @@ class AuthenticationController < BaseController
 
     redirect to('/')
   end
-
-  # omniauth template
-  # get '/auth/:provider/callback' do
-  # end
 end

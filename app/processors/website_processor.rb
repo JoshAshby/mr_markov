@@ -1,17 +1,6 @@
 class WebsiteProcessor < Processors::Base
   register_as :website
 
-  meta_options do
-    url is_a: :string
-
-    verb is_a: :enum, choices: [ :get, :post, :put, :patch, :delete, :options, :head ]
-    user_agent is_a: :string
-    headers is_a: :hash, keys_are: :string, values_are: :string
-    body is_a: :string
-    success_codes is_a: :integer
-    redirect_limit is_a: :integer
-  end
-
   setup_options do
     required :url
 
@@ -21,6 +10,17 @@ class WebsiteProcessor < Processors::Base
              body: nil,
              success_codes: (200..300),
              redirect_limit: 3
+  end
+
+  meta_options do
+    url            type: :string
+
+    verb           type: :enum, choices: [ :get, :post, :put, :patch, :delete, :options, :head ]
+    user_agent     type: :string
+    headers        type: :hash, keys_type: :string, values_type: :string
+    body           type: :string
+    success_codes  type: :integer
+    redirect_limit type: :integer
   end
 
   def handle

@@ -37,6 +37,8 @@ class BaseController < Sinatra::Base
   helpers Sinatra::ContentFor, Sinatra::Cookies, AuthenticationHelper, PartialHelper
   register Sinatra::Flash
 
+  # TODO: Find a way to box these up into a module, so that they can have
+  # documentation since all the controllers are ignored currently.
   def authenticate!
     unless logged_in?
       session[:return_path] = request.path

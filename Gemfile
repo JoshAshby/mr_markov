@@ -94,11 +94,15 @@ group :development, :test do
   gem 'byebug'
   gem 'awesome_print'
 
+  gem 'pry'
+  gem 'pry-byebug'
+
   gem 'better_errors'
   gem 'binding_of_caller'
 
   gem 'guard'
   gem 'guard-minitest'
+  gem 'guard-yard'
 end
 
 group :test do
