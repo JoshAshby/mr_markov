@@ -11,4 +11,4 @@ Bundler.require :default, AshFrame.environment
 class MrMarkov; end
 
 require 'require_all'
-require_rel %w| config/initializers lib app |
+require_rel %w| config/initializers lib app/workers app/blocks app/processors app/models |
