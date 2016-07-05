@@ -1,18 +1,5 @@
 require_relative 'mr_markov'
-# require 'opal'
-
-# opal = Opal::Server.new {|s|
-#   s.append_path 'app'
-#   s.main = 'application'
-# }
-
-# map opal.source_maps.prefix do
-#   run opal.source_maps
-# end
-
-# map '/assets' do
-#   run opal.sprockets
-# end
+require_rel %w| config/initializers lib app/helpers app/presenters app/controllers |
 
 map '/' do
   run ApplicationController
