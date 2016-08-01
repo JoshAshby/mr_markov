@@ -1,5 +1,7 @@
 class RunFrameBlock < AshFrame::Block
-  require :frame, :event, :logger
+  require :frame, :event
+
+  optional logger: nil
 
   def logic
     frame_processor      = Processors.get frame.processor

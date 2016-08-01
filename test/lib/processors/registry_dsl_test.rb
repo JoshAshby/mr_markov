@@ -9,9 +9,11 @@ class Processors::RegistryTest < MiniTest::Test
     Processors.unregister :test
   end
 
+  # We have to use Processors::Base here instead of just a blank anonymous
+  # class like in the other DSLs because the registry checks the type of class
+  # we are registering with it
   def test_register
     processor_klass = Class.new(Processors::Base) do
-
       register_as :test
     end
 

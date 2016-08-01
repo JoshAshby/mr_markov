@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Giant integration tests across all the DSLs in a processor
 class ProcessorsBaseTest < MiniTest::Test
   def setup
     Processors.unregister :test
