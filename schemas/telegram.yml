@@ -1,0 +1,32 @@
+$schema: http://json-schema.org/draft-04/schema#
+
+type: object
+properties:
+    inputs:
+      type: object
+      required:
+        - message
+
+      properties:
+        message:
+          type: string
+
+    options:
+      type: object
+      properties:
+        apiToken:
+          anyOf:
+             - type: string
+             - type: number
+
+        roomId:
+          anyOf:
+             - type: string
+             - type: number
+
+    outputs:
+      type: object
+      properties:
+        message:
+          type: string
+
