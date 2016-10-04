@@ -8,56 +8,56 @@ definitions:
 
 type: object
 properties:
-    inputs:
-      type: object
-      required:
-        - url
+  inputs:
+    type: object
+    required:
+      - url
 
-      properties:
-        url:
-          type: string
+    properties:
+      url:
+        type: string
 
-        headers:
-          $ref: "#/definitions/headers"
+      headers:
+        $ref: "#/definitions/headers"
 
-        body:
-          type: string
+      body:
+        type: string
 
-    options:
-      type: object
-      properties:
-        method:
-          type: string
-          enum:
-            - GET
-            - POST
-            - PUT
-            - PATCH
-            - DELETE
-            - OPTIONS
-            - HEAD
+  options:
+    type: object
+    properties:
+      method:
+        type: string
+        enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+          - HEAD
 
-        userAgent:
-          type: string
-          default: mr_markov yolo/4.20
+      userAgent:
+        type: string
+        default: mr_markov yolo/4.20
 
-        successCodes:
-          type: array
-          default:
-            - 200
+      successCodes:
+        type: array
+        default:
+          - 200
 
-        redirectLimit:
-          type: number
-          default: 3
+      redirectLimit:
+        type: number
+        default: 3
 
-    outputs:
-      type: object
-      properties:
-        statusCode:
-          type: number
+  outputs:
+    type: object
+    properties:
+      statusCode:
+        type: number
 
-        headers:
-          $ref: "#/definitions/headers"
+      headers:
+        $ref: "#/definitions/headers"
 
-        body:
-          type: string
+      body:
+        type: string

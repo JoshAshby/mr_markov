@@ -2,50 +2,66 @@ $schema: http://json-schema.org/draft-04/schema#
 
 type: object
 properties:
-    inputs:
-      type: object
-      required:
-        - value
+  inputs:
+    type: object
+    required:
+      - value
 
-      properties:
-        value:
-          anyOf:
-             - type: string
-             - type: number
+    properties:
+      value:
+        anyOf:
+           - type: string
+           - type: number
 
-    outputs:
-      type: object
-      additionalProperties:
+  options:
+    type: object
+    properties:
+      default:
+        anyOf:
+          - type: string
+          - type: number
+
+      groups:
         type: object
-        properties:
-          joiner:
-            type: string
-            enum:
-              - AND
-              - OR
+        additionalProperties:
+          type: object
+          properties:
+            joiner:
+              type: string
+              enum:
+                - AND
+                - OR
 
-          output:
-            anyOf:
-               - type: string
-               - type: number
+            output:
+              anyOf:
+                 - type: string
+                 - type: number
 
-          conditions:
-            type: array
-            items:
-              type: object
-              properties:
-                operation:
-                  type: string
-                  enum:
-                    - >
-                    - >=
-                    - <
-                    - <=
-                    - ==
-                    - !=
-                    - =~
+            conditions:
+              type: array
+              items:
+                type: object
+                properties:
+                  operation:
+                    type: string
+                    enum:
+                      - >
+                      - >=
+                      - <
+                      - <=
+                      - ==
+                      - !=
+                      - =~
 
-                value:
-                  anyOf:
-                     - type: string
-                     - type: number
+                  value:
+                    anyOf:
+                       - type: string
+                       - type: number
+
+  outputs:
+    type: object
+    properties:
+      value:
+        anyOf:
+          - type: string
+          - type: number

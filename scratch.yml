@@ -3,279 +3,273 @@ name: Sample Weather Graph
 start_node: Fetch DarkSky
 
 nodes:
+  DarkSky URL:
+    value:
+      outputs:
+        value: 'https://api.darksky.net/forecast/74f65677b181ada2161b5f8162b40426/40.0226,-105.2570'
+
   Fetch DarkSky:
-    type: fetch
-    options:
-      url: 'https://api.darksky.net/forecast/74f65677b181ada2161b5f8162b40426/40.0226,-105.2570'
+    fetch:
+      options:
+        method: GET
 
   Extract Current Conditions:
-    type: json_extract
-    options:
-      temperature:
-        from: '$.currently.apparentTemperature'
-        as: single_value
-      precipitation_chance:
-        from: '$.currently.precipProbability'
-        as: single_value
-      summary:
-        from: '$.currently.summary'
-        as: single_value
-      icon:
-        from: '$.currently.icon'
-        as: single_value
+    json_extract:
+      outputs:
+        temperature: '$.currently.apparentTemperature'
+        precipitation_chance: '$.currently.precipProbability'
+        summary: '$.currently.summary'
+        icon: '$.currently.icon'
 
-  Precipitation Conditional Current:
-    type: conditional
-    options:
-      default: NOAP
-      groups:
-        - operation: AND
-          output: PROBABLY DRY
-          conditions:
-            - type: <
-              value: 0.15
+  Current Temperature Word:
+    conditional:
+      options:
+        default: ¯\_(๏̯͡๏)_/¯
+        groups:
+          - joiner: AND
+            output: COLD
+            conditions:
+              - operation: <
+                value: 40.0
 
-        - operation: AND
-          output: QUESTIONABLY WET
-          conditions:
-            - type: >=
-              value: 0.15
-            - type: <
-              value: 0.40
+          - joiner: AND
+            output: CHILLY
+            conditions:
+              - operation: >=
+                value: 40.0
+              - operation: <
+                value: 65.0
 
-        - operation: AND
-          output: PROBABLY WET
-          conditions:
-            - type: >=
-              value: 0.40
-            - type: <
-              value: 0.60
+          - joiner: AND
+            output: NICE
+            conditions:
+              - operation: >=
+                value: 65.0
+              - operation: <=
+                value: 80.0
 
-        - operation: AND
-          output: SUPAWET
-          conditions:
-            - type: >=
-              value: 0.60
+          - joiner: AND
+            output: HOT
+            conditions:
+              - operation: >
+                value: 80.0
 
-  Temperature Conditional Current:
-    type: conditional
-    options:
-      default: ¯\_(๏̯͡๏)_/¯
-      groups:
-        - operation: AND
-          output: COLD
-          conditions:
-            - type: <
-              value: 40.0
+  Current Precipitation Word:
+    conditional:
+      options:
+        default: NOAP
+        groups:
+          - joiner: AND
+            output: PROBABLY DRY
+            conditions:
+              - operation: <
+                value: 0.15
 
-        - operation: AND
-          output: CHILLY
-          conditions:
-            - type: >=
-              value: 40.0
-            - type: <
-              value: 65.0
+          - joiner: AND
+            output: QUESTIONABLY WET
+            conditions:
+              - operation: >=
+                value: 0.15
+              - operation: <
+                value: 0.40
 
-        - operation: AND
-          output: NICE
-          conditions:
-            - type: >=
-              value: 65.0
-            - type: <=
-              value: 80.0
+          - joiner: AND
+            output: PROBABLY WET
+            conditions:
+              - operation: >=
+                value: 0.40
+              - operation: <
+                value: 0.60
 
-        - operation: AND
-          output: HOT
-          conditions:
-            - type: >
-              value: 80.0
+          - joiner: AND
+            output: SUPAWET
+            conditions:
+              - operation: >=
+                value: 0.60
 
   Extract Upcoming Conditions:
-    type: json_extract
-    options:
-      temperature:
-        from: '$.hourly.data[1].apparentTemperature'
-        as: single_value
-      precipitation_chance:
-        from: '$.hourly.data[1].precipProbability'
-        as: single_value
-      summary:
-        from: '$.hourly.data[1].summary'
-        as: single_value
-      icon:
-        from: '$.hourly.data[1].icon'
-        as: single_value
+    json_extract:
+      outputs:
+        temperature: '$.data.hourly[1].apparentTemperature'
+        precipitation_chance: '$.data.hourly[1].precipProbability'
+        summary: '$.data.hourly[1].summary'
+        icon: '$.data.hourly[1].icon'
 
-  Precipitation Conditional Upcoming:
-    type: conditional
-    options:
-      default: NOAP
-      groups:
-        - operation: AND
-          output: PROBABLY DRY
-          conditions:
-            - type: <
-              value: 0.15
+  Upcoming Temperature Word:
+    conditional:
+      options:
+        default: ¯\_(๏̯͡๏)_/¯
+        groups:
+          - joiner: AND
+            output: COLD
+            conditions:
+              - operation: <
+                value: 40.0
 
-        - operation: AND
-          output: QUESTIONABLY WET
-          conditions:
-            - type: >=
-              value: 0.15
-            - type: <
-              value: 0.40
+          - joiner: AND
+            output: CHILLY
+            conditions:
+              - operation: >=
+                value: 40.0
+              - operation: <
+                value: 65.0
 
-        - operation: AND
-          output: PROBABLY WET
-          conditions:
-            - type: >=
-              value: 0.40
-            - type: <
-              value: 0.60
+          - joiner: AND
+            output: NICE
+            conditions:
+              - operation: >=
+                value: 65.0
+              - operation: <=
+                value: 80.0
 
-        - operation: AND
-          output: SUPAWET
-          conditions:
-            - type: >=
-              value: 0.60
+          - joiner: AND
+            output: HOT
+            conditions:
+              - operation: >
+                value: 80.0
 
-  Temperature Conditional Upcoming:
-    type: conditional
-    options:
-      default: ¯\_(๏̯͡๏)_/¯
-      groups:
-        - operation: AND
-          output: COLD
-          conditions:
-            - type: <
-              value: 40.0
+  Upcoming Precipitation Word:
+    conditional:
+      options:
+        default: NOAP
+        groups:
+          - joiner: AND
+            output: PROBABLY DRY
+            conditions:
+              - operation: <
+                value: 0.15
 
-        - operation: AND
-          output: CHILLY
-          conditions:
-            - type: >=
-              value: 40.0
-            - type: <
-              value: 65.0
+          - joiner: AND
+            output: QUESTIONABLY WET
+            conditions:
+              - operation: >=
+                value: 0.15
+              - operation: <
+                value: 0.40
 
-        - operation: AND
-          output: NICE
-          conditions:
-            - type: >=
-              value: 65.0
-            - type: <=
-              value: 80.0
+          - joiner: AND
+            output: PROBABLY WET
+            conditions:
+              - operation: >=
+                value: 0.40
+              - operation: <
+                value: 0.60
 
-        - operation: AND
-          output: HOT
-          conditions:
-            - type: >
-              value: 80.0
+          - joiner: AND
+            output: SUPAWET
+            conditions:
+              - operation: >=
+                value: 0.60
 
   Weather Template:
-    type: template
-    options:
-      template: |
-        Hey there, heres the current weather:
-        Summary: {{ current_summary }}
+    template:
+      options:
+        template: |
+          Hey there, heres the current weather:
+          Summary: {{ current_summary }}
 
-        Temp: {{ current_temperature_word }} ({{ current_temperature }}F)
-        Precip: {{ current_precipitation_word }} ({{ current_precipitation_chance | times: 100 | ceil }}%)
+          Temp: {{ current_temperature_word }} ({{ current_temperature }}F)
+          Precip: {{ current_precipitation_word }} ({{ current_precipitation_chance | times: 100 | ceil }}%)
 
-        And the upcoming hour:
-        Summary: {{ upcoming_summary }}
+          And the upcoming hour:
+          Summary: {{ upcoming_summary }}
 
-        Temp: {{ upcoming_temperature_word }} ({{ upcoming_temperature }}F)
-        Precip: {{ upcoming_precipitation_word }} ({{ upcoming_precipitation_chance | times: 100 | ceil }}%)
+          Temp: {{ upcoming_temperature_word }} ({{ upcoming_temperature }}F)
+          Precip: {{ upcoming_precipitation_word }} ({{ upcoming_precipitation_chance | times: 100 | ceil }}%)
 
   Send Telegram:
-    type: telegram
-    options:
-      token: ENV['TELEGRAM_TOKEN']
-      chat_id: '204348342'
+    telegram:
+      options:
+        apiToken: ENV['TELEGRAM_TOKEN']
+        roomId: '204348342'
 
-connections:
+edges:
+  - from_node: DarkSky URL
+    from_output: value
+    to_node: Fetch DarkSky
+    to_input: url
+
   - from_node: Fetch DarkSky
-    from_field: body
+    from_output: body
     to_node: Extract Current Conditions
-    to_field: input
+    to_input: json
 
   - from_node: Extract Current Conditions
-    from_field: temperature
-    to_node: Temperature Conditional Current
-    to_field: input
+    from_output: temperature
+    to_node: Current Temperature Word
+    to_input: value
 
   - from_node: Extract Current Conditions
-    from_field: precipitation
-    to_node: Precipitation Conditional Current
-    to_field: input
+    from_output: precipitation
+    to_node: Current Precipitation Word
+    to_input: value
 
-  - from_node: Extract Current Conditions
-    from_field: temperature
+  - from_node: Extract Current Condition
+    from_output: temperature
     to_node: Weather Template
-    to_field: current_temperature
+    to_input: current_temperature
 
-  - from_node: Temperature Conditional Current
-    from_field: output
+  - from_node: Extract Current Condition
+    from_output: precipitation
     to_node: Weather Template
-    to_field: current_temperature_word
+    to_input: current_precipitation
 
-  - from_node: Extract Current Conditions
-    from_field: precipitation
+  - from_node: Extract Current Condition
+    from_output: summary
     to_node: Weather Template
-    to_field: current_precipitation
+    to_input: current_summary
 
-  - from_node: Precipitation Conditional Current
-    from_field: output
+  - from_node: Current Temperature Word
+    from_output: value
     to_node: Weather Template
-    to_field: current_precipitation_word
+    to_input: current_temperature_word
 
-  - from_node: Extract Current Conditions
-    from_field: summary
+  - from_node: Cuurrent Precipitation Word
+    from_output: value
     to_node: Weather Template
-    to_field: current_summary
+    to_input: current_precipitation_word
 
   - from_node: Fetch DarkSky
-    from_field: body
+    from_output: body
     to_node: Extract Upcoming Conditions
-    to_field: input
+    to_input: json
 
   - from_node: Extract Upcoming Conditions
-    from_field: temperature
-    to_node: Temperature Conditional Upcoming
-    to_field: input
+    from_output: temperature
+    to_node: Upcoming Temperature Word
+    to_input: value
 
   - from_node: Extract Upcoming Conditions
-    from_field: precipitation
-    to_node: Precipitation Conditional Upcoming
-    to_field: input
+    from_output: precipitation
+    to_node: Upcoming Precipitation Word
+    to_input: value
 
-  - from_node: Extract Upcoming Conditions
-    from_field: temperature
+  - from_node: Extract Upcoming Condition
+    from_output: temperature
     to_node: Weather Template
-    to_field: current_temperature
+    to_input: upcoming_temperature
 
-  - from_node: Temperature Conditional Upcoming
-    from_field: output
+  - from_node: Extract Upcoming Condition
+    from_output: precipitation
     to_node: Weather Template
-    to_field: current_temperature_word
+    to_input: upcoming_precipitation
 
-  - from_node: Extract Upcoming Conditions
-    from_field: precipitation
+  - from_node: Extract Upcoming Condition
+    from_output: summary
     to_node: Weather Template
-    to_field: current_precipitation
+    to_input: upcoming_summary
 
-  - from_node: Precipitation Conditional Upcoming
-    from_field: output
+  - from_node: Upcoming Temperature Word
+    from_output: value
     to_node: Weather Template
-    to_field: current_precipitation_word
+    to_input: upcoming_temperature_word
 
-  - from_node: Extract Upcoming Conditions
-    from_field: summary
+  - from_node: Upcoming Precipitation Word
+    from_output: value
     to_node: Weather Template
-    to_field: current_summary
+    to_input: upcoming_precipitation_word
 
   - from_node: Weather Template
-    from_field: output
+    from_output: rendered
     to_node: Send Telegram
-    to_field: input
+    to_input: message
