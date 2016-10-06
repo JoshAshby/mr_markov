@@ -1,190 +1,219 @@
 name: Sample Weather Graph
 
-start_node: Fetch DarkSky
-
 nodes:
-  DarkSky URL:
-    value:
-      outputs:
-        value: 'https://api.darksky.net/forecast/74f65677b181ada2161b5f8162b40426/40.0226,-105.2570'
+  - name: DarkSky URL Time Trigger
+    type: time_trigger
+    options:
+      - run_at: '6:00am',
+        timezone: 'America/Denver',
+        day_mask: '0111110',
+        repeat: 1
 
-  Fetch DarkSky:
-    fetch:
-      options:
-        method: GET
+      - run_at: '8:00am',
+        timezone: 'America/Denver',
+        day_mask: '1111111',
+        repeat: 1
 
-  Extract Current Conditions:
-    json_extract:
-      outputs:
-        temperature: '$.currently.apparentTemperature'
-        precipitation_chance: '$.currently.precipProbability'
-        summary: '$.currently.summary'
-        icon: '$.currently.icon'
+      - run_at: '10:00am',
+        timezone: 'America/Denver',
+        day_mask: '1111111',
+        repeat: 1
 
-  Current Temperature Word:
-    conditional:
-      options:
-        default: ¯\_(๏̯͡๏)_/¯
-        groups:
-          - joiner: AND
-            output: COLD
-            conditions:
-              - operation: <
-                value: 40.0
+      - run_at: '12:00pm',
+        timezone: 'America/Denver',
+        day_mask: '0111110',
+        repeat: 1
 
-          - joiner: AND
-            output: CHILLY
-            conditions:
-              - operation: >=
-                value: 40.0
-              - operation: <
-                value: 65.0
+      - run_at: '2:00pm',
+        timezone: 'America/Denver',
+        day_mask: '1111111',
+        repeat: 1
 
-          - joiner: AND
-            output: NICE
-            conditions:
-              - operation: >=
-                value: 65.0
-              - operation: <=
-                value: 80.0
+      - run_at: '4:00pm',
+        timezone: 'America/Denver',
+        day_mask: '0111110',
+        repeat: 1
 
-          - joiner: AND
-            output: HOT
-            conditions:
-              - operation: >
-                value: 80.0
+    outputs:
+      value: 'https://api.darksky.net/forecast/74f65677b181ada2161b5f8162b40426/40.0226,-105.2570'
 
-  Current Precipitation Word:
-    conditional:
-      options:
-        default: NOAP
-        groups:
-          - joiner: AND
-            output: PROBABLY DRY
-            conditions:
-              - operation: <
-                value: 0.15
+  - name: Fetch DarkSky
+    type: fetch
+    options:
+      method: GET
 
-          - joiner: AND
-            output: QUESTIONABLY WET
-            conditions:
-              - operation: >=
-                value: 0.15
-              - operation: <
-                value: 0.40
+  - name: Extract Current Conditions
+    type: json_extract
+    outputs:
+      temperature: '$.currently.apparentTemperature'
+      precipitation_chance: '$.currently.precipProbability'
+      summary: '$.currently.summary'
+      icon: '$.currently.icon'
 
-          - joiner: AND
-            output: PROBABLY WET
-            conditions:
-              - operation: >=
-                value: 0.40
-              - operation: <
-                value: 0.60
+  - name: Current Temperature Word
+    type: conditional
+    options:
+      default: ¯\_(๏̯͡๏)_/¯
+      groups:
+        - joiner: AND
+          output: COLD
+          conditions:
+            - operation: <
+              value: 40.0
 
-          - joiner: AND
-            output: SUPAWET
-            conditions:
-              - operation: >=
-                value: 0.60
+        - joiner: AND
+          output: CHILLY
+          conditions:
+            - operation: >=
+              value: 40.0
+            - operation: <
+              value: 65.0
 
-  Extract Upcoming Conditions:
-    json_extract:
-      outputs:
-        temperature: '$.data.hourly[1].apparentTemperature'
-        precipitation_chance: '$.data.hourly[1].precipProbability'
-        summary: '$.data.hourly[1].summary'
-        icon: '$.data.hourly[1].icon'
+        - joiner: AND
+          output: NICE
+          conditions:
+            - operation: >=
+              value: 65.0
+            - operation: <=
+              value: 80.0
 
-  Upcoming Temperature Word:
-    conditional:
-      options:
-        default: ¯\_(๏̯͡๏)_/¯
-        groups:
-          - joiner: AND
-            output: COLD
-            conditions:
-              - operation: <
-                value: 40.0
+        - joiner: AND
+          output: HOT
+          conditions:
+            - operation: >
+              value: 80.0
 
-          - joiner: AND
-            output: CHILLY
-            conditions:
-              - operation: >=
-                value: 40.0
-              - operation: <
-                value: 65.0
+  - name: Current Precipitation Word
+    type: conditional
+    options:
+      default: NOAP
+      groups:
+        - joiner: AND
+          output: PROBABLY DRY
+          conditions:
+            - operation: <
+              value: 0.15
 
-          - joiner: AND
-            output: NICE
-            conditions:
-              - operation: >=
-                value: 65.0
-              - operation: <=
-                value: 80.0
+        - joiner: AND
+          output: QUESTIONABLY WET
+          conditions:
+            - operation: >=
+              value: 0.15
+            - operation: <
+              value: 0.40
 
-          - joiner: AND
-            output: HOT
-            conditions:
-              - operation: >
-                value: 80.0
+        - joiner: AND
+          output: PROBABLY WET
+          conditions:
+            - operation: >=
+              value: 0.40
+            - operation: <
+              value: 0.60
 
-  Upcoming Precipitation Word:
-    conditional:
-      options:
-        default: NOAP
-        groups:
-          - joiner: AND
-            output: PROBABLY DRY
-            conditions:
-              - operation: <
-                value: 0.15
+        - joiner: AND
+          output: SUPAWET
+          conditions:
+            - operation: >=
+              value: 0.60
 
-          - joiner: AND
-            output: QUESTIONABLY WET
-            conditions:
-              - operation: >=
-                value: 0.15
-              - operation: <
-                value: 0.40
+  - name: Extract Upcoming Conditions
+    type: json_extract
+    outputs:
+      temperature: '$.data.hourly[1].apparentTemperature'
+      precipitation_chance: '$.data.hourly[1].precipProbability'
+      summary: '$.data.hourly[1].summary'
+      icon: '$.data.hourly[1].icon'
 
-          - joiner: AND
-            output: PROBABLY WET
-            conditions:
-              - operation: >=
-                value: 0.40
-              - operation: <
-                value: 0.60
+  - name: Upcoming Temperature Word
+    type: conditional
+    options:
+      default: ¯\_(๏̯͡๏)_/¯
+      groups:
+        - joiner: AND
+          output: COLD
+          conditions:
+            - operation: <
+              value: 40.0
 
-          - joiner: AND
-            output: SUPAWET
-            conditions:
-              - operation: >=
-                value: 0.60
+        - joiner: AND
+          output: CHILLY
+          conditions:
+            - operation: >=
+              value: 40.0
+            - operation: <
+              value: 65.0
 
-  Weather Template:
-    template:
-      options:
-        template: |
-          Hey there, heres the current weather:
-          Summary: {{ current_summary }}
+        - joiner: AND
+          output: NICE
+          conditions:
+            - operation: >=
+              value: 65.0
+            - operation: <=
+              value: 80.0
 
-          Temp: {{ current_temperature_word }} ({{ current_temperature }}F)
-          Precip: {{ current_precipitation_word }} ({{ current_precipitation_chance | times: 100 | ceil }}%)
+        - joiner: AND
+          output: HOT
+          conditions:
+            - operation: >
+              value: 80.0
 
-          And the upcoming hour:
-          Summary: {{ upcoming_summary }}
+  - name: Upcoming Precipitation Word
+    type: conditional
+    options:
+      default: NOAP
+      groups:
+        - joiner: AND
+          output: PROBABLY DRY
+          conditions:
+            - operation: <
+              value: 0.15
 
-          Temp: {{ upcoming_temperature_word }} ({{ upcoming_temperature }}F)
-          Precip: {{ upcoming_precipitation_word }} ({{ upcoming_precipitation_chance | times: 100 | ceil }}%)
+        - joiner: AND
+          output: QUESTIONABLY WET
+          conditions:
+            - operation: >=
+              value: 0.15
+            - operation: <
+              value: 0.40
 
-  Send Telegram:
-    telegram:
-      options:
-        apiToken: ENV['TELEGRAM_TOKEN']
-        roomId: '204348342'
+        - joiner: AND
+          output: PROBABLY WET
+          conditions:
+            - operation: >=
+              value: 0.40
+            - operation: <
+              value: 0.60
+
+        - joiner: AND
+          output: SUPAWET
+          conditions:
+            - operation: >=
+              value: 0.60
+
+  - name: Weather Template
+    type: template
+    options:
+      template: |
+        Hey there, heres the current weather:
+        Summary: {{ current_summary }}
+
+        Temp: {{ current_temperature_word }} ({{ current_temperature }}F)
+        Precip: {{ current_precipitation_word }} ({{ current_precipitation_chance | times: 100 | ceil }}%)
+
+        And the upcoming hour:
+        Summary: {{ upcoming_summary }}
+
+        Temp: {{ upcoming_temperature_word }} ({{ upcoming_temperature }}F)
+        Precip: {{ upcoming_precipitation_word }} ({{ upcoming_precipitation_chance | times: 100 | ceil }}%)
+
+  - name: Send Telegram
+    type: telegram
+    options:
+      apiToken: ENV['TELEGRAM_TOKEN']
+      roomId: '204348342'
 
 edges:
-  - from_node: DarkSky URL
+  - from_node: DarkSky URL Time Trigger
     from_output: value
     to_node: Fetch DarkSky
     to_input: url
