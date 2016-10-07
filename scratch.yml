@@ -4,35 +4,71 @@ nodes:
   - name: DarkSky URL Time Trigger
     type: time_trigger
     options:
-      - run_at: '6:00am',
-        timezone: 'America/Denver',
-        day_mask: '0111110',
-        repeat: 1
+      - run_at: '6:00am'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
 
-      - run_at: '8:00am',
-        timezone: 'America/Denver',
-        day_mask: '1111111',
-        repeat: 1
+      - run_at: '8:00am'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
 
-      - run_at: '10:00am',
-        timezone: 'America/Denver',
-        day_mask: '1111111',
-        repeat: 1
+      - run_at: '10:00am'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
 
-      - run_at: '12:00pm',
-        timezone: 'America/Denver',
-        day_mask: '0111110',
-        repeat: 1
+      - run_at: '12:00pm'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
 
-      - run_at: '2:00pm',
-        timezone: 'America/Denver',
-        day_mask: '1111111',
-        repeat: 1
+      - run_at: '2:00pm'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
 
-      - run_at: '4:00pm',
-        timezone: 'America/Denver',
-        day_mask: '0111110',
-        repeat: 1
+      - run_at: '4:00pm'
+        timezone: 'America/Denver'
+        weeks_between_repeat: 1
+        days:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
 
     outputs:
       value: 'https://api.darksky.net/forecast/74f65677b181ada2161b5f8162b40426/40.0226,-105.2570'
@@ -53,34 +89,34 @@ nodes:
   - name: Current Temperature Word
     type: conditional
     options:
-      default: ¯\_(๏̯͡๏)_/¯
+      default: '¯\_(๏̯͡๏)_/¯'
       groups:
         - joiner: AND
           output: COLD
           conditions:
-            - operation: <
+            - operation: '<'
               value: 40.0
 
         - joiner: AND
           output: CHILLY
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 40.0
-            - operation: <
+            - operation: '<'
               value: 65.0
 
         - joiner: AND
           output: NICE
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 65.0
-            - operation: <=
+            - operation: '<='
               value: 80.0
 
         - joiner: AND
           output: HOT
           conditions:
-            - operation: >
+            - operation: '>'
               value: 80.0
 
   - name: Current Precipitation Word
@@ -91,29 +127,29 @@ nodes:
         - joiner: AND
           output: PROBABLY DRY
           conditions:
-            - operation: <
+            - operation: '<'
               value: 0.15
 
         - joiner: AND
           output: QUESTIONABLY WET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.15
-            - operation: <
+            - operation: '<'
               value: 0.40
 
         - joiner: AND
           output: PROBABLY WET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.40
-            - operation: <
+            - operation: '<'
               value: 0.60
 
         - joiner: AND
           output: SUPAWET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.60
 
   - name: Extract Upcoming Conditions
@@ -127,34 +163,34 @@ nodes:
   - name: Upcoming Temperature Word
     type: conditional
     options:
-      default: ¯\_(๏̯͡๏)_/¯
+      default: '¯\_(๏̯͡๏)_/¯'
       groups:
         - joiner: AND
           output: COLD
           conditions:
-            - operation: <
+            - operation: '<'
               value: 40.0
 
         - joiner: AND
           output: CHILLY
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 40.0
-            - operation: <
+            - operation: '<'
               value: 65.0
 
         - joiner: AND
           output: NICE
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 65.0
-            - operation: <=
+            - operation: '<='
               value: 80.0
 
         - joiner: AND
           output: HOT
           conditions:
-            - operation: >
+            - operation: '>'
               value: 80.0
 
   - name: Upcoming Precipitation Word
@@ -165,29 +201,29 @@ nodes:
         - joiner: AND
           output: PROBABLY DRY
           conditions:
-            - operation: <
+            - operation: '<'
               value: 0.15
 
         - joiner: AND
           output: QUESTIONABLY WET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.15
-            - operation: <
+            - operation: '<'
               value: 0.40
 
         - joiner: AND
           output: PROBABLY WET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.40
-            - operation: <
+            - operation: '<'
               value: 0.60
 
         - joiner: AND
           output: SUPAWET
           conditions:
-            - operation: >=
+            - operation: '>='
               value: 0.60
 
   - name: Weather Template
@@ -209,7 +245,7 @@ nodes:
   - name: Send Telegram
     type: telegram
     options:
-      apiToken: ENV['TELEGRAM_TOKEN']
+      apiToken: 'abcdef'
       roomId: '204348342'
 
 edges:
